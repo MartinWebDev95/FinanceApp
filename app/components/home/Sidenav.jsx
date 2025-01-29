@@ -9,7 +9,7 @@ const Sidenav = () => {
   const [isMinimize, setIsMinimize] = useState(false);
 
   return (
-    <aside className={`${isMinimize ? 'lg:w-fit' : 'lg:w-72'} w-full bg-neutral-900 text-gray-400 h-fit lg:h-screen rounded-none lg:rounded-r-lg flex flex-col justify-between items-start transition-all ease-in-out duration-300 shadow-xl order-2 lg:order-1`}>
+    <aside className={`${isMinimize ? 'lg:w-fit' : 'lg:w-72'} w-full bg-neutral-900 text-gray-400 h-fit lg:h-screen rounded-none lg:rounded-r-lg flex flex-col justify-between items-start transition-all ease-in-out duration-300 shadow-xl order-2 lg:order-1 font-bold`}>
       <div className='w-full'>
         <div className='my-8 pl-4 hidden lg:block'>
           {isMinimize ? <LogoMinimize /> : <LogoFull />}

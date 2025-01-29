@@ -1,3 +1,6 @@
+import { PT_Sans } from 'next/font/google';
+
+//Icons
 export function HomeIcon() {
   return (
     <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="currentColor"  className="icon icon-tabler icons-tabler-filled icon-tabler-home">
@@ -88,6 +91,10 @@ export function LogoMinimize() {
   )
 }
 
+//Fonts
+export const ptSans = PT_Sans({ weight: ['400', '700'], subsets: ['latin'] });
+
+//NavLinks
 export const getNavLinks = () => {
   return [
     { name: "Overview", href: "/", icon: <HomeIcon/> },
