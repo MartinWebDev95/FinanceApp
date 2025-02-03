@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoutIcon } from "../lib/utils";
 import Cards from "../components/overview/Cards";
+import Grid from "../components/dashboard/Grid";
 
 export default function OverviewPage(){
   return (
@@ -22,6 +23,8 @@ export default function OverviewPage(){
         <Cards title='Income' data='50000' />
         <Cards title='Expenses' data='40000' />
       </div>
+
+      <Grid />
     </div>
   )
 }
