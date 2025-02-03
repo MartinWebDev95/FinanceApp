@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${ptSans.className} antialiased overflow-x-hidden h-screen bg-slate-200`}>
+      <body className={`${ptSans.className} antialiased overflow-hidden h-screen bg-slate-200`}>
         {children}
       </body>
     </html>
