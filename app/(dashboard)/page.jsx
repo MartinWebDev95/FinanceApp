@@ -18,7 +18,7 @@ export default function OverviewPage(){
         </Link>
       </div>
 
-      <div className="mt-6 w-full flex items-center justify-between gap-6">
+      <div className="mt-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
         <Cards title='Current Balance' data='30000' main />
         <Cards title='Income' data='50000' />
         <Cards title='Expenses' data='40000' />
