@@ -1,5 +1,4 @@
 import "./globals.css";
-import Sidenav from "./components/home/Sidenav";
 import { ptSans } from "./lib/utils";
 
 export const metadata = {
@@ -10,11 +9,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${ptSans.className} antialiased flex flex-col justify-between lg:flex-row overflow-hidden h-screen`}>
-        <Sidenav/>
-        <main className="w-full order-1 lg:order-2">
-          {children}
-        </main>
+      <body className={`${ptSans.className} antialiased overflow-hidden h-screen bg-slate-200`}>
+        {children}
       </body>
     </html>
   );
