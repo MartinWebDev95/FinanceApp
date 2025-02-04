@@ -5,7 +5,7 @@ import Grid from "../components/dashboard/Grid";
 
 export default function OverviewPage(){
   return (
-    <div className="p-8">
+      <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Overview</h1>
         <Link 
@@ -25,6 +25,6 @@ export default function OverviewPage(){
       </div>
 
       <Grid />
-    </div>
+    </>
   )
 }
