@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoutIcon } from "../lib/utils";
 import Cards from "../components/overview/Cards";
-import Grid from "../components/dashboard/Grid";
+import Grid from "../components/overview/Grid";
 
 export default function OverviewPage(){
   return (
