@@ -37,6 +37,9 @@ export default {
         '23': '23',
         '24': '24',
         '25': '25',
+      },
+      gridTemplateColumns: {
+        'auto-fill': 'repeat(auto-fill, minmax(330px, 1fr))'
       }
     },
   },
