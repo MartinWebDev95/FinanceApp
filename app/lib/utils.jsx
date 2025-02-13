@@ -130,18 +130,31 @@ export function PotMenuIcon() {
   );
 }
 
+export function FilterIcon() {
+  return (
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-sort-descending stroke-neutral-900">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 6l9 0" />
+      <path d="M4 12l7 0" />
+      <path d="M4 18l7 0" />
+      <path d="M15 15l3 3l3 -3" />
+      <path d="M18 6l0 12" />
+    </svg>
+  )
+}
+
 //Themes for CustomSelect
 export const themes = [
-  { nameColor: 'Green', color: '#1bf526' },
-  { nameColor: 'Purple', color: '#a909b8' },
-  { nameColor: 'Blue', color: '#0b16bd' },
-  { nameColor: 'Yellow', color: '#fce300' },
-  { nameColor: 'Cyan', color: '#00ffbf' },
-  { nameColor: 'Red', color: '#ff0000' },
-  { nameColor: 'Brown', color: '#81492d' },
-  { nameColor: 'Pink', color: '#f50589' },
-  { nameColor: 'Orange', color: '#ff5e00' },
-  { nameColor: 'Gray', color: '#7a716b' },
+  { label: 'Green', value: '#1bf526' },
+  { label: 'Purple', value: '#a909b8' },
+  { label: 'Blue', value: '#0b16bd' },
+  { label: 'Yellow', value: '#fce300' },
+  { label: 'Cyan', value: '#00ffbf' },
+  { label: 'Red', value: '#ff0000' },
+  { label: 'Brown', value: '#81492d' },
+  { label: 'Pink', value: '#f50589' },
+  { label: 'Orange', value: '#ff5e00' },
+  { label: 'Gray', value: '#7a716b' },
 ];
 
 //Fonts
@@ -162,3 +175,22 @@ export const getNavLinks = () => {
 export const calculatePercentage = ({ total, target }) => {
   return ((total / target) * 100).toFixed(2);
 };
+
+//Sort Data
+export const sortBy = [
+    { label: "Latest", value: "latest" },
+    { label: "Oldest", value: "oldest" },
+    { label: "A to Z", value: "az" },
+    { label: "Z to A", value: "za" },
+    { label: "Highest Amount", value: "highest" },
+    { label: "Lowest Amount", value: "lowest" },
+];
+
+//Categories
+export const categories = [
+  { label: "Entertainment", value: "entertainment" },
+  { label: "Bill", value: "bill" },
+  { label: "Groceries", value: "groceries" },
+  { label: "Dining Out", value: "dining-out" },
+  { label: "Transportation", value: "transportation" },
+];
