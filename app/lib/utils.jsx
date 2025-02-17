@@ -189,6 +189,11 @@ export const sortBy = [
 //Categories
 export const categories = [
   { label: "All transactions", value: "all" },
+  { label: "General", value: "general" },
+  { label: "Shopping", value: "shopping" },
+  { label: "Lifestyle", value: "lifestyle" },
+  { label: "Education", value: "education" },
+  { label: "Personal Care", value: "personal_care" },
   { label: "Entertainment", value: "entertainment" },
   { label: "Bill", value: "bill" },
   { label: "Groceries", value: "groceries" },
