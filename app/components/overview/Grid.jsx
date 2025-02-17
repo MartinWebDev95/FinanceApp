@@ -65,6 +65,34 @@ const Grid = () => {
             <ArrowDetails />
           </Link>
         </div>
+
+        <div>
+          <ul>
+            {data.transactions.slice(0,4).map((transaction, index) => (
+              <li key={index} className="flex items-center justify-between border-b py-2">
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="./assets/Logo-1.jpg" 
+                    alt={transaction.name} 
+                    className="rounded-full w-9 h-9"
+                  />
+                  <p className="font-bold text-neutral-900">{transaction.name}</p>
+                </div>
+
+                <div className="text-right">
+                  <p className="mb-1 font-bold text-neutral-900">
+                    {transaction.amount > 0 ? (
+                      `$${transaction.amount}`
+                    ) : (
+                      `-$${Math.abs(transaction.amount)}`
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-500">{transaction.date.split('T')[0]}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {/* Recurring Bills */}
