@@ -1,8 +1,8 @@
 import { ArrowDownIcon, themes } from '@/app/lib/utils';
 import { useEffect, useRef, useState } from 'react'
 
-const CustomSelect = () => {
-  const [selected, setSelected] = useState("Select a theme");
+const CustomSelect = ({ data, placeholder }) => {
+  const [selected, setSelected] = useState(placeholder);
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
 
@@ -18,7 +18,7 @@ const CustomSelect = () => {
   }, []);
 
   return (
-    <div ref={selectRef} className="relative w-full cursor-pointer">
+    <div ref={selectRef} className="relative w-full cursor-pointer mt-1">
       {/* Show the list and the option selected */}
       <div
         className="bg-gray-100 py-1 px-2 border border-gray-300 rounded-lg flex justify-between items-center"
@@ -31,7 +31,7 @@ const CustomSelect = () => {
       {/* All the options */}
       {isOpen && (
         <ul className="absolute w-full bottom-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1">
-          {themes.map((option) => (
+          {data.map((option) => (
             <li
               key={option.value}
               className="rounded-lg py-1 px-2 hover:bg-gray-200 flex items-center gap-2 "
