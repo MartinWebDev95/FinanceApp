@@ -1,8 +1,12 @@
 import { ArrowDetails, PotsIcon } from "@/app/lib/utils";
 import Link from "next/link";
 import data from '@/app/lib/data.json'
+import { fetchPots } from "@/app/lib/data";
 
-const Grid = () => {
+const Grid = async () => {
+
+  const pots = await fetchPots({ limit: 4 });
+
   return (
     <div className="mt-10 lg:mt-8 lg:grid lg:grid-cols-2 lg:auto-rows-min lg:gap-4 h-full">
       {/* Pots */}
@@ -22,13 +26,13 @@ const Grid = () => {
             <div className="w-full">
               <p className="mb-1 text-slate-600">Pots</p>
               <p className="font-bold text-3xl">
-                ${data.pots.reduce((acc, currentValue) => acc + currentValue.total, 0)}
+                ${pots[0].total_sum}
               </p>
             </div>
           </div>
 
           <div className="w-full md:w-1/2 grid grid-cols-2 grid-rows-2 gap-y-2 h-full flex-1">
-            {data.pots.slice(0,4).map((pot) => (
+            {pots.map((pot) => (
               <div key={pot.name} className="h-full flex items-center w-full">
                 <div 
                   className="h-full w-1 rounded-md" 
