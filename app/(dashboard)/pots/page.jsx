@@ -1,8 +1,11 @@
 import { BtnAddNewPot } from "@/app/components/pots/buttons";
 import Pot from "@/app/components/pots/Pot";
-import data from '@/app/lib/data.json';
+import { fetchPots } from "@/app/lib/data";
 
-export default function PotsPage(){
+export default async function PotsPage(){
+
+  const pots = await fetchPots();
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -11,7 +14,7 @@ export default function PotsPage(){
       </div>
 
       <div className="grid grid-cols-auto-fill gap-4 mt-8">
-        {data.pots.map(pot => (
+        {pots.map(pot => (
           <Pot 
             key={pot.name} 
             {...pot}
