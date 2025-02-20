@@ -5,8 +5,9 @@ import { useState } from "react";
 import Menu from "./Menu";
 import AddPotModal from "./AddPotModal";
 import AddTransactionModal from "../transactions/AddTransactionModal";
+import AddBudgetModal from "../budgets/AddBudgetModal";
 
-export function BtnMenuPot() {
+export function BtnMenuPot({ setIsOpenedEditModal, setIsOpenedDeleteModal }) {
 
   const [isOpened, setIsOpened] = useState(false);
 
@@ -20,7 +21,12 @@ export function BtnMenuPot() {
         <PotMenuIcon />
       </button>
 
-      <Menu isOpened={isOpened} setIsOpened={setIsOpened} />
+      <Menu 
+        isOpened={isOpened} 
+        setIsOpenedMenu={setIsOpened}
+        setIsOpenedEditModal={setIsOpenedEditModal} 
+        setIsOpenedDeleteModal={setIsOpenedDeleteModal} 
+      />
     </>
   )
 }
@@ -86,6 +92,45 @@ export function BtnAddNewTransaction() {
       </button>
 
       <AddTransactionModal isOpened={isOpened} setIsOpened={setIsOpened} />
+    </>
+  )
+}
+
+export function BtnAddNewBudget() {
+
+  const [isOpened, setIsOpened] = useState(false);
+
+  return (
+    <>
+      <button 
+        type="button" 
+        className="flex items-center gap-2 bg-neutral-900 text-white font-bold rounded-md shadow-lg p-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 group"
+        onClick={() => setIsOpened(true)}
+      >
+        <AddIcon />
+        <span>Add New Budget</span>
+      </button>
+
+      <AddBudgetModal isOpened={isOpened} setIsOpened={setIsOpened} />
+    </>
+  )
+}
+
+export function BtnMenuBudget() {
+
+  const [isOpened, setIsOpened] = useState(false);
+
+  const handleOpenMenuBudget = (e) => {
+    setIsOpened(!isOpened);
+  }
+
+  return (
+    <>
+      <button type="button" onClick={handleOpenMenuBudget}>
+        <PotMenuIcon />
+      </button>
+
+      <Menu isOpened={isOpened} setIsOpened={setIsOpened} />
     </>
   )
 }
