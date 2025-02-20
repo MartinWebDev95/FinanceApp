@@ -2,7 +2,7 @@ import Filter from "@/app/components/Filter";
 import { BtnAddNewTransaction } from "@/app/components/pots/buttons";
 import Search from "@/app/components/Search";
 import Table from "@/app/components/transactions/Table";
-import data from '@/app/lib/data';
+import data from '@/app/lib/data.json';
 import { categories, sortBy } from "@/app/lib/utils";
 
 export default function TransactionsPage(){
