@@ -5,11 +5,15 @@ import { BtnAddMoney, BtnMenuPot, BtnWithdraw } from "./buttons";
 import { useState } from "react";
 import AddMoneyModal from "./AddMoneyModal";
 import WithdrawModal from "./WithdrawModal";
+import AddPotModal from "./AddPotModal";
+import DeletePotModal from "./DeletePotModal";
 
 const Pot = ({ name, total, target, theme }) => {
 
   const [isOpenedAddMoneyModal, setIsOpenedAddMoneyModal] = useState(false);
   const [isOpenedWithdrawModal, setIsOpenedWithdrawModal] = useState(false);
+  const [isOpenedEditPotModal, setIsOpenedEditPotModal] = useState(false);
+  const [isOpenedDeletePotModal, setIsOpenedDeletePotModal] = useState(false);
 
   return (
     <>
@@ -20,7 +24,10 @@ const Pot = ({ name, total, target, theme }) => {
             <span className="text-xl font-bold">{name}</span> 
           </h2>
 
-          <BtnMenuPot />
+          <BtnMenuPot 
+            setIsOpenedEditModal={setIsOpenedEditPotModal} 
+            setIsOpenedDeleteModal={setIsOpenedDeletePotModal}  
+          />
         </div>
 
         <div className="mt-8">
@@ -70,6 +77,21 @@ const Pot = ({ name, total, target, theme }) => {
           name={name} 
           total={total}
           target={target}
+        />
+      )}
+
+      {isOpenedEditPotModal && (
+        <AddPotModal 
+          isOpened={isOpenedEditPotModal} 
+          setIsOpened={setIsOpenedEditPotModal} 
+          edit
+        />
+      )}
+
+      {isOpenedDeletePotModal && (
+        <DeletePotModal 
+          isOpened={isOpenedDeletePotModal} 
+          setIsOpened={setIsOpenedDeletePotModal} 
         />
       )}
     </>
