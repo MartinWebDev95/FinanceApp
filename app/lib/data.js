@@ -1,5 +1,15 @@
 import { sql } from "@vercel/postgres";
 
+export async function getUser(email) {
+  try {
+    const user = await sql`SELECT * FROM users WHERE email = ${email}`;
+    
+    return user.rows[0];
+  } catch (error) {
+    throw new Error('Failed to get user.');
+  }
+}
+
 export async function fetchPots({ limit = 0 } = {}) {
   try {
     let data;
@@ -16,7 +26,6 @@ export async function fetchPots({ limit = 0 } = {}) {
 
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch revenue data.');
+    throw new Error('Failed to fetch pots.');
   }
 }
