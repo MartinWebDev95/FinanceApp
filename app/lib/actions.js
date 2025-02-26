@@ -1,6 +1,8 @@
 'use server';
 
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
+import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function login(prevState, formData) {
@@ -44,4 +46,29 @@ export async function createUser(prevState, formData) {
 
   // Redirect to the login page
   redirect('/login');
+}
+
+export async function createNewPot(prevState, formData) {
+  const rawFormData = {
+    potName: formData.get('potName'),
+    target: formData.get('targetAmount'),
+    theme: formData.get('theme'),
+  };
+
+  const { potName, target, theme } = rawFormData;
+
+  try {
+
+    const { user } = await auth();
+
+    await sql`
+      INSERT INTO pots (name, target, theme, user_id) VALUES (${potName}, ${parseInt(target)}, ${theme}, ${user.id})
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to create pot.');
+  }
+
+  revalidatePath('/pots');
+  redirect('/pots');
 }
