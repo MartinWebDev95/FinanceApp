@@ -2,7 +2,7 @@ import { ArrowDownIcon, themes } from '@/app/lib/utils';
 import { useEffect, useRef, useState } from 'react'
 
 const CustomSelect = ({ data, placeholder }) => {
-  const [selected, setSelected] = useState(placeholder);
+  const [selected, setSelected] = useState({ label: placeholder, value: '' });
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
 
@@ -19,12 +19,21 @@ const CustomSelect = ({ data, placeholder }) => {
 
   return (
     <div ref={selectRef} className="relative w-full cursor-pointer mt-1">
+      <input type="hidden" name='theme' id='theme' defaultValue={selected.value} />
+
       {/* Show the list and the option selected */}
       <div
         className="bg-gray-100 py-1 px-2 border border-gray-300 rounded-lg flex justify-between items-center"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{selected}</span>
+        <p className='flex items-center gap-2'>
+          {selected.value && (
+            <span className={`w-3 h-3 rounded-full`} style={{ backgroundColor: selected.value }}/>
+          )}
+
+          <span>{selected.label}</span>
+        </p>
+
         <ArrowDownIcon />
       </div>
 
@@ -36,7 +45,7 @@ const CustomSelect = ({ data, placeholder }) => {
               key={option.value}
               className="rounded-lg py-1 px-2 hover:bg-gray-200 flex items-center gap-2 "
               onClick={() => {
-                setSelected(option.label);
+                setSelected({label: option.label, value: option.value});
                 setIsOpen(false);
               }}
             >
