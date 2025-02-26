@@ -1,22 +1,26 @@
-import Link from "next/link";
 import { LogoutIcon } from "../lib/utils";
 import Cards from "../components/overview/Cards";
 import Grid from "../components/overview/Grid";
 import data from '../lib/data.json';
+import { signOut } from "@/auth";
 
 export default function OverviewPage(){
   return (
       <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Overview</h1>
-        <Link 
-          href='/logout' 
-          className="bg-neutral-900 text-white font-bold rounded-md p-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 flex items-center gap-2">
+        <form 
+          action={async () => {
+            'use server';
+            await signOut({ redirectTo: '/login' });
+          }}>
+          <button type="submit" className="bg-neutral-900 text-white font-bold rounded-md p-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 flex items-center gap-2">
             <LogoutIcon/>
             <span>
               Logout
             </span>
-        </Link>
+          </button>
+        </form>
       </div>
 
       <div className="mt-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
