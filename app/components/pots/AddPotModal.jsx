@@ -1,5 +1,7 @@
 import { themes } from "@/app/lib/utils";
 import CustomSelect from "./CustomSelect";
+import { useActionState } from "react";
+import { createNewPot } from "@/app/lib/actions";
 
 const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
 
@@ -11,6 +13,8 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
     return;
   }
 
+  const [errorMessage, formAction] = useActionState(createNewPot, undefined);
+
   return (
     <dialog 
       id="addPotDialog" 
@@ -18,7 +22,7 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
       className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
       onClick={handleCloseModal}
     >
-      <form action="" method="dialog" className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             { edit ? 'Edit Pot' : 'Add New Pot' }
@@ -55,7 +59,7 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
           </div>
 
           <div>
-            <label htmlFor="targetTheme">Theme</label>
+            <label htmlFor="theme">Theme</label>
             <CustomSelect data={themes} placeholder="Select a theme" />
           </div>
         </fieldset>
