@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { sql } from "@vercel/postgres";
 
 export async function getUser(email) {
@@ -11,16 +12,19 @@ export async function getUser(email) {
 }
 
 export async function fetchPots({ limit = 0 } = {}) {
+
   try {
+    const { user } = await auth();
+    
     let data;
 
     if (limit > 0) {
       data = await sql`
-        SELECT *, (SELECT SUM(total) FROM pots) AS total_sum FROM pots LIMIT ${limit}
+        SELECT *, (SELECT SUM(total) FROM pots WHERE user_id=${user.id}) AS total_sum FROM pots WHERE user_id=${user.id} LIMIT ${limit}
       `;
     } else {
       data = await sql`
-        SELECT *, (SELECT SUM(total) FROM pots) AS total_sum FROM pots
+        SELECT * FROM pots WHERE user_id=${user.id}
       `;
     }
 
