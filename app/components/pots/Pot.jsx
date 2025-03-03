@@ -87,6 +87,9 @@ const Pot = ({ id, name, total, target, theme }) => {
           isOpened={isOpenedEditPotModal} 
           setIsOpened={setIsOpenedEditPotModal} 
           id={id}
+          name={name}
+          target={target}
+          theme={theme}
           edit
         />
       )}
