@@ -75,6 +75,7 @@ const Pot = ({ id, name, total, target, theme }) => {
         <WithdrawModal 
           isOpened={isOpenedWithdrawModal} 
           setIsOpened={setIsOpenedWithdrawModal}
+          id={id}
           name={name} 
           total={total}
           target={target}
@@ -85,6 +86,7 @@ const Pot = ({ id, name, total, target, theme }) => {
         <AddPotModal 
           isOpened={isOpenedEditPotModal} 
           setIsOpened={setIsOpenedEditPotModal} 
+          id={id}
           edit
         />
       )}
@@ -93,6 +95,7 @@ const Pot = ({ id, name, total, target, theme }) => {
         <DeletePotModal 
           isOpened={isOpenedDeletePotModal} 
           setIsOpened={setIsOpenedDeletePotModal} 
+          id={id}
         />
       )}
     </>
