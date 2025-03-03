@@ -1,13 +1,35 @@
+import { updateMoneyPot } from "@/app/lib/actions";
 import { calculatePercentage } from "@/app/lib/utils";
+import { useActionState, useState } from "react";
 
-const WithdrawModal = ({ isOpened, setIsOpened, name, total, target }) => {
-  
+const WithdrawModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
+
+  const [newAmount, setNewAmount] = useState(0);
+
+  const updatePot = updateMoneyPot.bind(null, id, { type: 'withdraw' });
+
+  const [errorMessage, formAction] = useActionState(updatePot, undefined)
+
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
       setIsOpened(false);
     }
 
     return;
+  }
+
+  const handleNewAmount = (e) => {
+    if(Number(e.target.value) === 0){
+      setNewAmount('');
+      return;
+    }
+
+    if((Number(e.target.value) > total)){
+      setNewAmount(total);
+      return;
+    }
+
+    setNewAmount(Number(e.target.value));
   }
 
   return (
@@ -17,7 +39,7 @@ const WithdrawModal = ({ isOpened, setIsOpened, name, total, target }) => {
       className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
       onClick={handleCloseModal}
     >
-      <form action="" method="dialog" className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             Withdraw from {name}
@@ -30,7 +52,7 @@ const WithdrawModal = ({ isOpened, setIsOpened, name, total, target }) => {
           <div className="mt-6">
             <p className="w-full flex items-center justify-between">
               <span className="text-gray-500 font-bold">New Amount</span> 
-              <span className="font-bold text-3xl">${total}</span>
+              <span className="font-bold text-3xl">${(total - newAmount)}</span>
             </p>
     
             {/* Custom Progress Bar */}
@@ -38,19 +60,28 @@ const WithdrawModal = ({ isOpened, setIsOpened, name, total, target }) => {
               <div 
                 className="h-3 rounded-full bg-red-600" 
                 style={{
-                  width: `${calculatePercentage({ total, target })}%` 
+                  width: `${calculatePercentage({ total: (total - newAmount), target })}%` 
                 }}
               /> 
             </div>
     
             <p className="w-full flex items-center justify-between text-gray-500 font-bold text-xs">
-              <span className="text-red-500">{calculatePercentage({ total, target })}%</span>
+              <span className="text-red-500">
+                {calculatePercentage({ total: (total - newAmount), target })}%
+              </span>
               <span>Target of ${target}</span>
             </p>
 
             <div className="mt-3">
               <label htmlFor="newAmount">Amount to Withdraw</label>
-              <input className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" type="number" name="newAmount" id="newAmount" placeholder="Enter amount" />
+              <input 
+                className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" type="number" 
+                name="newAmount" 
+                id="newAmount" 
+                placeholder="Enter amount"
+                value={newAmount} 
+                onChange={handleNewAmount}
+              />
             </div>
           </div>
         </fieldset>
