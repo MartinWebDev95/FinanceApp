@@ -8,7 +8,7 @@ import WithdrawModal from "./WithdrawModal";
 import AddPotModal from "./AddPotModal";
 import DeletePotModal from "./DeletePotModal";
 
-const Pot = ({ name, total, target, theme }) => {
+const Pot = ({ id, name, total, target, theme }) => {
 
   const [isOpenedAddMoneyModal, setIsOpenedAddMoneyModal] = useState(false);
   const [isOpenedWithdrawModal, setIsOpenedWithdrawModal] = useState(false);
@@ -64,6 +64,7 @@ const Pot = ({ name, total, target, theme }) => {
         <AddMoneyModal 
           isOpened={isOpenedAddMoneyModal} 
           setIsOpened={setIsOpenedAddMoneyModal}
+          id={id}
           name={name} 
           total={total}
           target={target}
