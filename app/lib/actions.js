@@ -83,6 +83,7 @@ export async function updateMoneyPot(id, type, prevState, formData) {
   try {
     const { user } = await auth();
 
+    // Depending on the type, we either add or subtract money from the pot
     if(type.type === 'add') {
       await sql`
         UPDATE pots SET total = total + ${parseInt(newAmount)} WHERE id = ${id} AND user_id = ${user.id}
@@ -95,6 +96,22 @@ export async function updateMoneyPot(id, type, prevState, formData) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to udpate money in the pot.');
+  }
+
+  revalidatePath('/pots');
+  redirect('/pots');
+}
+
+export async function deletePot(id) {
+  try {
+    const { user } = await auth();
+
+    await sql`
+      DELETE FROM pots WHERE id = ${id} AND user_id = ${user.id}
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete pot.');
   }
 
   revalidatePath('/pots');
