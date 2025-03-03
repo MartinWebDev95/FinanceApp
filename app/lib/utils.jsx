@@ -173,6 +173,7 @@ export const getNavLinks = () => {
 
 //Calculate Percentage
 export const calculatePercentage = ({ total, target }) => {
+  if(total > target) return 100;
   return ((total / target) * 100).toFixed(2);
 };
 
