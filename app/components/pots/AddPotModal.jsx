@@ -1,9 +1,13 @@
 import { themes } from "@/app/lib/utils";
 import CustomSelect from "./CustomSelect";
 import { useActionState } from "react";
-import { createNewPot } from "@/app/lib/actions";
+import { createNewPot, editPot } from "@/app/lib/actions";
 
-const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
+const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = false }) => {
+  
+  const updatePot = editPot.bind(null, id);
+
+  const [errorMessage, formAction] = useActionState(edit ? updatePot : createNewPot, undefined);
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
@@ -12,8 +16,6 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
 
     return;
   }
-
-  const [errorMessage, formAction] = useActionState(createNewPot, undefined);
 
   return (
     <dialog 
@@ -43,6 +45,7 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
               type="text" 
               name="potName" 
               id="potName" 
+              defaultValue={name}
               placeholder="e.g. Rainy Days" 
             />
           </div>
@@ -54,13 +57,14 @@ const AddPotModal = ({ isOpened, setIsOpened, edit = false }) => {
               type="number" 
               name="targetAmount" 
               id="targetAmount" 
+              defaultValue={target}
               placeholder="$ e.g. 2000" 
             />
           </div>
 
           <div>
             <label htmlFor="theme">Theme</label>
-            <CustomSelect data={themes} placeholder="Select a theme" />
+            <CustomSelect data={themes} defaultValue={theme} placeholder="Select a theme" />
           </div>
         </fieldset>
 
