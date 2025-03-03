@@ -1,4 +1,4 @@
-import { addMoneyPot } from "@/app/lib/actions";
+import { updateMoneyPot } from "@/app/lib/actions";
 import { calculatePercentage } from "@/app/lib/utils";
 import { useActionState, useState } from "react";
 
@@ -6,7 +6,8 @@ const AddMoneyModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
 
   const [newAmount, setNewAmount] = useState(1);
 
-  const updatePot = addMoneyPot.bind(null, id);
+  const updatePot = updateMoneyPot.bind(null, id, { type: 'add' });
+  
   const [errorMessage, formAction] = useActionState(updatePot, undefined);
 
   const handleCloseModal = (e) => {
