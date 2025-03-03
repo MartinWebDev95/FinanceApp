@@ -58,7 +58,6 @@ export async function createNewPot(prevState, formData) {
   const { potName, target, theme } = rawFormData;
 
   try {
-
     const { user } = await auth();
 
     await sql`
@@ -67,6 +66,30 @@ export async function createNewPot(prevState, formData) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to create pot.');
+  }
+
+  revalidatePath('/pots');
+  redirect('/pots');
+}
+
+export async function editPot(id, prevState, formData){
+  const rawFormData = {
+    potName: formData.get('potName'),
+    target: formData.get('targetAmount'),
+    theme: formData.get('theme'),
+  };
+
+  const { potName, target, theme } = rawFormData;
+
+  try {
+    const { user } = await auth();
+
+    await sql`
+      UPDATE pots SET name = ${potName}, target = ${parseInt(target)}, theme = ${theme} WHERE id = ${id} AND user_id = ${user.id}
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to update pot.');
   }
 
   revalidatePath('/pots');
