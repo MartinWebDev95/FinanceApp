@@ -96,6 +96,7 @@ const Pot = ({ id, name, total, target, theme }) => {
           isOpened={isOpenedDeletePotModal} 
           setIsOpened={setIsOpenedDeletePotModal} 
           id={id}
+          name={name}
         />
       )}
     </>
