@@ -72,3 +72,25 @@ export async function createNewPot(prevState, formData) {
   revalidatePath('/pots');
   redirect('/pots');
 }
+
+export async function addMoneyPot(id, prevState, formData) {
+  const rawFormData = {
+    newAmount: formData.get('newAmount'),
+  };
+
+  const { newAmount } = rawFormData;
+
+  try {
+    const { user } = await auth();
+
+    await sql`
+      UPDATE pots SET total = total + ${parseInt(newAmount)} WHERE id = ${id} AND user_id = ${user.id}
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to add money to pot.');
+  }
+
+  revalidatePath('/pots');
+  redirect('/pots');
+}
