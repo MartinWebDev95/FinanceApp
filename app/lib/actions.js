@@ -73,7 +73,7 @@ export async function createNewPot(prevState, formData) {
   redirect('/pots');
 }
 
-export async function addMoneyPot(id, prevState, formData) {
+export async function updateMoneyPot(id, type, prevState, formData) {
   const rawFormData = {
     newAmount: formData.get('newAmount'),
   };
@@ -83,12 +83,18 @@ export async function addMoneyPot(id, prevState, formData) {
   try {
     const { user } = await auth();
 
-    await sql`
-      UPDATE pots SET total = total + ${parseInt(newAmount)} WHERE id = ${id} AND user_id = ${user.id}
-    `;
+    if(type.type === 'add') {
+      await sql`
+        UPDATE pots SET total = total + ${parseInt(newAmount)} WHERE id = ${id} AND user_id = ${user.id}
+      `;
+    } else {
+      await sql`
+        UPDATE pots SET total = total - ${parseInt(newAmount)} WHERE id = ${id} AND user_id = ${user.id}
+      `;
+    }
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to add money to pot.');
+    throw new Error('Failed to udpate money in the pot.');
   }
 
   revalidatePath('/pots');
