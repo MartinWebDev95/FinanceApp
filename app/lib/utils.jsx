@@ -201,3 +201,14 @@ export const categories = [
   { label: "Dining Out", value: "dining-out" },
   { label: "Transportation", value: "transportation" },
 ];
+
+export function getDefaultFilter({ type }){
+  switch(type){
+    case 'sort':
+      return { label: 'Latest', value: 'latest' };
+    case 'category':
+      return { label: 'All transactions', value: 'all' };
+    default:
+      return null;
+  }
+}
