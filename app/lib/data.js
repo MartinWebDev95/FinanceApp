@@ -33,3 +33,15 @@ export async function fetchPots({ limit = 0 } = {}) {
     throw new Error('Failed to fetch pots.');
   }
 }
+
+export async function fetchCategories() {
+  try {
+    const categories = await sql`
+      SELECT * FROM categories
+    `;
+
+    return categories.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch categories.');
+  }
+}
