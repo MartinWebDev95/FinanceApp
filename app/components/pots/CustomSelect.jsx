@@ -29,7 +29,8 @@ const CustomSelect = ({ data, defaultValue, placeholder }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className='flex items-center gap-2'>
-          {selected.value && (
+          {/* Show the color if the value is a color */}
+          {selected.value.startsWith('#') && (
             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: selected.value }}/>
           )}
 
@@ -47,11 +48,14 @@ const CustomSelect = ({ data, defaultValue, placeholder }) => {
               key={option.value}
               className="rounded-lg py-1 px-2 hover:bg-gray-200 flex items-center gap-2 "
               onClick={() => {
-                setSelected({label: option.label, value: option.value});
+                setSelected({ label: option.label, value: option.value });
                 setIsOpen(false);
               }}
             >
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: option.value }}/>
+              {/* Show the color if the value is a color */}
+              {option.value.startsWith('#') && (
+                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: option.value }}/>
+              )}
 
               {option.label}
             </li>
