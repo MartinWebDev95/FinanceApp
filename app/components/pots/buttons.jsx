@@ -76,7 +76,7 @@ export function BtnWithdraw({ setIsOpened }) {
   )
 }
 
-export function BtnAddNewTransaction() {
+export function BtnAddNewTransaction({ categories }) {
 
   const [isOpened, setIsOpened] = useState(false);
 
@@ -91,7 +91,7 @@ export function BtnAddNewTransaction() {
         <span>Add New Transaction</span>
       </button>
 
-      <AddTransactionModal isOpened={isOpened} setIsOpened={setIsOpened} />
+      <AddTransactionModal isOpened={isOpened} setIsOpened={setIsOpened} categories={categories} />
     </>
   )
 }

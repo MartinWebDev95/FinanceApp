@@ -1,7 +1,6 @@
-import { categories } from "@/app/lib/utils";
 import CustomSelect from "../pots/CustomSelect";
 
-const AddTransactionModal = ({ isOpened, setIsOpened }) => {
+const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){

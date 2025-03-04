@@ -2,15 +2,19 @@ import Filter from "@/app/components/Filter";
 import { BtnAddNewTransaction } from "@/app/components/pots/buttons";
 import Search from "@/app/components/Search";
 import Table from "@/app/components/transactions/Table";
+import { fetchCategories } from "@/app/lib/data";
 import data from '@/app/lib/data.json';
-import { categories, sortBy } from "@/app/lib/utils";
+import { sortBy } from "@/app/lib/utils";
 
-export default function TransactionsPage(){
+export default async function TransactionsPage(){
+
+  const categories = await fetchCategories();
+
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Transactions</h1>
-        <BtnAddNewTransaction />
+        <BtnAddNewTransaction categories={categories} />
       </div>
 
       <div className="mt-8 w-full bg-white p-8 rounded-md shadow-lg">
@@ -22,14 +26,14 @@ export default function TransactionsPage(){
               <p className="hidden md:block text-gray-500 text-sm whitespace-nowrap">
                 Sort by
               </p>
-              <Filter options={sortBy} />
+              <Filter options={sortBy} type="sort" />
             </div>
 
             <div className="w-fit md:w-72 flex items-center gap-4">
               <p className="hidden md:block text-gray-500 text-sm whitespace-nowrap">
                 Filter by Category
               </p>
-              <Filter options={categories} />
+              <Filter options={categories} type="category" />
             </div>
           </div>
         </div>
