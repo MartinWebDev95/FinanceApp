@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowDownIcon, FilterIcon } from "../lib/utils";
+import { ArrowDownIcon, FilterIcon, getDefaultFilter } from "../lib/utils";
 
-const Filter = ({ options }) => {
-  const [selected, setSelected] = useState(options[0].label);
+const Filter = ({ options, type }) => {
+  const [selected, setSelected] = useState (getDefaultFilter({ type }));
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
 
@@ -21,12 +21,13 @@ const Filter = ({ options }) => {
 
   return (
     <div ref={selectRef} className="relative w-full cursor-pointer">
+      <input type="hidden" name='filter' id='filter' />
       {/* Show the list and the option selected */}
       <div
         className="bg-white p-2 border border-gray-300 rounded-lg md:flex md:justify-between md:items-center hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{selected}</span>
+        <span>{selected.label}</span>
         <ArrowDownIcon />
       </div>
 
@@ -41,12 +42,24 @@ const Filter = ({ options }) => {
       {/* All the options */}
       {isOpen && (
         <ul className="absolute w-40 md:w-full right-0 top-7 md:top-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1">
+          {type === 'category' && (            
+            <li 
+              className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2"
+              onClick={() => {
+                setSelected({ label: 'All Transactions', value: 'all' });
+                setIsOpen(false);
+              }}
+            >
+              All Transactions
+            </li>
+          )}
+
           {options.map((option) => (
             <li
               key={option.value}
               className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2 "
               onClick={() => {
-                setSelected(option.label);
+                setSelected({ label: option.label, value: option.value });
                 setIsOpen(false);
               }}
             >
