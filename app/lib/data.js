@@ -46,7 +46,7 @@ export async function fetchCategories() {
   }
 }
 
-export async function fetchTransactions({ limit = 0 } = {}) {
+export async function fetchTransactions({ limit = 0, query = '' } = {}) {
   try {
     const { user } = await auth();
     
@@ -62,8 +62,14 @@ export async function fetchTransactions({ limit = 0 } = {}) {
     } else {
       data = await sql`
         SELECT t.id, t.avatar, t.name, c.label, t.date, t.amount, t.recurring 
-        FROM transactions AS t, categories AS c
+        FROM transactions AS t, categories AS c 
         WHERE t.category_id = c.id AND t.user_id = ${user.id}
+        AND (
+          t.name ILIKE ${`%${query}%`} 
+          OR c.label ILIKE ${`%${query}%`}
+          OR t.date::TEXT ILIKE ${`%${query}%`}
+          OR t.amount::TEXT ILIKE ${`%${query}%`}
+        )
       `;
     }
 
