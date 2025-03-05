@@ -1,4 +1,9 @@
-const Table = ({ data }) => {
+import { fetchTransactions } from "@/app/lib/data";
+
+const Table = async ({ query }) => {
+
+  const transactions = await fetchTransactions({ query });
+
   return (
     <table className="w-full table-auto">
       <thead className="text-left">
@@ -19,7 +24,7 @@ const Table = ({ data }) => {
       </thead>
 
       <tbody>
-        {data.map(transaction => (
+        {transactions.map(transaction => (
           <tr key={transaction.id} className="font-bold text-neutral-900 border-t border-gray-200">
             <td className="flex items-center gap-2 py-4 text-xs md:text-base">
               <img src={transaction.avatar} alt={transaction.name} className="w-8 h-8 rounded-full" />
