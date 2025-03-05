@@ -45,3 +45,30 @@ export async function fetchCategories() {
     throw new Error('Failed to fetch categories.');
   }
 }
+
+export async function fetchTransactions({ limit = 0 } = {}) {
+  try {
+    const { user } = await auth();
+    
+    let data;
+
+    if (limit > 0) {
+      data = await sql`
+        SELECT t.id, t.avatar, t.name, c.label, t.date, t.amount, t.recurring 
+        FROM transactions AS t, categories AS c
+        WHERE t.category_id = c.id AND t.user_id = ${user.id}
+        LIMIT ${limit}
+      `;
+    } else {
+      data = await sql`
+        SELECT t.id, t.avatar, t.name, c.label, t.date, t.amount, t.recurring 
+        FROM transactions AS t, categories AS c
+        WHERE t.category_id = c.id AND t.user_id = ${user.id}
+      `;
+    }
+
+    return data.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch transactions.');
+  }
+}
