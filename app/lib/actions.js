@@ -140,3 +140,40 @@ export async function deletePot(id) {
   revalidatePath('/pots');
   redirect('/pots');
 }
+
+export async function createNewTransaction(prevState, formData) {
+  const rawFormData = {
+    transactionName: formData.get('transactionName'),
+    transactionDate: formData.get('transactionDate'),
+    transactionAmount: formData.get('transactionAmount'),
+    transactionCategory: formData.get('theme'),
+    transactionRecurring: formData.get('transactionRecurring'),
+  };
+
+  const { 
+    transactionName, 
+    transactionDate,
+    transactionAmount,
+    transactionCategory,
+    transactionRecurring, 
+  } = rawFormData;
+
+  try {
+    //Fetch the category id
+    const categoryId = await sql`
+      SELECT id FROM categories WHERE value = ${transactionCategory}
+    `;
+
+    const { user } = await auth();
+
+    await sql`
+      INSERT INTO transactions (avatar, name, date, amount, recurring, category_id, user_id) VALUES ('./assets/Logo-1.jpg', ${transactionName}, ${transactionDate}, ${parseInt(transactionAmount)}, ${!transactionRecurring ? false : true}, ${categoryId.rows[0].id}, ${user.id})
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to create transaction.');
+  }
+
+  revalidatePath('/transactions');
+  redirect('/transactions');
+}
