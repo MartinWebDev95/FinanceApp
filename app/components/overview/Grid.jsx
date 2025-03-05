@@ -1,11 +1,11 @@
 import { ArrowDetails, PotsIcon } from "@/app/lib/utils";
 import Link from "next/link";
-import data from '@/app/lib/data.json'
-import { fetchPots } from "@/app/lib/data";
+import { fetchPots, fetchTransactions } from "@/app/lib/data";
 
 const Grid = async () => {
 
   const pots = await fetchPots({ limit: 4 });
+  const transactions = await fetchTransactions({ limit: 4 });
 
   return (
     <div className="mt-10 lg:mt-8 lg:grid lg:grid-cols-2 lg:auto-rows-min lg:gap-4 h-full">
@@ -71,11 +71,11 @@ const Grid = async () => {
         </div>
 
         <ul className="mt-2">
-          {data.transactions.slice(0,4).map((transaction, index) => (
-            <li key={index} className="flex items-center justify-between border-b py-2">
+          {transactions.map(transaction => (
+            <li key={transaction.id} className="flex items-center justify-between border-b py-2">
               <div className="flex items-center gap-2">
                 <img 
-                  src="./assets/Logo-1.jpg" 
+                  src={transaction.avatar}
                   alt={transaction.name} 
                   className="rounded-full w-9 h-9"
                 />
@@ -90,7 +90,9 @@ const Grid = async () => {
                     `-$${Math.abs(transaction.amount)}`
                   )}
                 </p>
-                <p className="text-xs text-gray-500">{transaction.date.split('T')[0]}</p>
+                <p className="text-xs text-gray-500">
+                  {new Date(transaction.date).toLocaleDateString()}
+                </p>
               </div>
             </li>
           ))}
