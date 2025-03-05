@@ -1,6 +1,10 @@
+import { useActionState } from "react";
 import CustomSelect from "../pots/CustomSelect";
+import { createNewTransaction } from "@/app/lib/actions";
 
 const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
+
+  const [errorMessage, formAction] = useActionState(createNewTransaction, undefined); 
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
@@ -17,14 +21,14 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
       className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
       onClick={handleCloseModal}
     >
-      <form action="" method="dialog" className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             Add New Transaction
           </legend>
 
           <div className="mb-3">
-            <label htmlFor="transactionDate">Transaction Name</label>
+            <label htmlFor="transactionName">Transaction Name</label>
             <input 
               type="text" 
               name="transactionName" 
@@ -51,6 +55,7 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
               type="number" 
               name="transactionAmount" 
               id="transactionAmount" 
+              step="any"
               placeholder="$ e.g. 2000" 
               className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" 
             />
@@ -62,7 +67,7 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
           </div>
           
           <div className="flex items-center gap-2">
-            <label htmlFor="transactionAmount">Recurring</label>
+            <label htmlFor="transactionRecurring">Recurring</label>
             <input 
               type="checkbox" 
               name="transactionRecurring" 
