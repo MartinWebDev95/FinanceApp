@@ -2,13 +2,14 @@ import Filter from "@/app/components/Filter";
 import { BtnAddNewTransaction } from "@/app/components/pots/buttons";
 import Search from "@/app/components/Search";
 import Table from "@/app/components/transactions/Table";
-import { fetchCategories, fetchTransactions } from "@/app/lib/data";
-import data from '@/app/lib/data.json';
+import { fetchCategories } from "@/app/lib/data";
 import { sortBy } from "@/app/lib/utils";
 
-export default async function TransactionsPage(){
+export default async function TransactionsPage({ searchParams }){
 
-  const transactions = await fetchTransactions();
+  const search = await searchParams;
+  const query = search?.search || '';
+
   const categories = await fetchCategories();
 
   return (
@@ -39,7 +40,7 @@ export default async function TransactionsPage(){
           </div>
         </div>
 
-        <Table data={transactions}/>
+        <Table query={query} />
       </div>
     </>
   )
