@@ -38,7 +38,7 @@ export default function RecurringBillsPage(){
         </div>
 
         <div className="w-full lg:w-3/4 h-full bg-white p-8 rounded-md shadow-lg">
-          <div className="w-full flex justify-between items-center pb-8 gap-4 md:gap-0">
+          <div className="w-full flex justify-between items-center pb-8 gap-4">
             <Search placeholder="Search bills"/>
 
             <div className="w-fit md:w-56 flex items-center gap-4">
