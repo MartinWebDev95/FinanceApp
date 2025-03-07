@@ -43,7 +43,7 @@ export default function RecurringBillsPage(){
 
             <div className="w-fit md:w-56 flex items-center gap-4">
               <p className="hidden md:block text-gray-500 text-sm whitespace-nowrap">Sort by</p>
-              <Filter options={sortBy} />
+              <Filter options={sortBy} type='sort' />
             </div>
           </div>
           
