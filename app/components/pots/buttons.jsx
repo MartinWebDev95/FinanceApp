@@ -96,7 +96,7 @@ export function BtnAddNewTransaction({ categories }) {
   )
 }
 
-export function BtnAddNewBudget() {
+export function BtnAddNewBudget({ categories }) {
 
   const [isOpened, setIsOpened] = useState(false);
 
@@ -111,7 +111,7 @@ export function BtnAddNewBudget() {
         <span>Add New Budget</span>
       </button>
 
-      <AddBudgetModal isOpened={isOpened} setIsOpened={setIsOpened} />
+      <AddBudgetModal isOpened={isOpened} setIsOpened={setIsOpened} categories={categories} />
     </>
   )
 }

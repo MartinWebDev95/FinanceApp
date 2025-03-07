@@ -1,14 +1,17 @@
 import Budget from "@/app/components/budgets/Budget";
 import { BtnAddNewBudget } from "@/app/components/pots/buttons";
+import { fetchCategories } from "@/app/lib/data";
 import data from '@/app/lib/data.json';
 
-export default function BudgetsPage(){
+export default async function BudgetsPage() {
+
+  const categories = await fetchCategories();
 
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Budgets</h1>
-        <BtnAddNewBudget />
+        <BtnAddNewBudget categories={categories} />
       </div>
 
       <div className="flex flex-col lg:flex-row items-start gap-4 mt-8">
