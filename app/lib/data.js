@@ -61,15 +61,28 @@ export async function fetchTransactions({ limit = 0, query = '' } = {}) {
       `;
     } else {
       data = await sql`
-        SELECT t.id, t.avatar, t.name, c.label, t.date, t.amount, t.recurring 
-        FROM transactions AS t, categories AS c 
-        WHERE t.category_id = c.id AND t.user_id = ${user.id}
+        SELECT t.id, t.avatar, t.name, c.label, c.value, t.date, t.amount, t.created_at 
+        FROM transactions AS t 
+        INNER JOIN categories AS c ON t.category_id = c.id
+        WHERE t.user_id = ${user.id}
+        AND c.value = COALESCE(NULLIF(${query?.category}, ''), c.value)
         AND (
-          t.name ILIKE ${`%${query}%`} 
-          OR c.label ILIKE ${`%${query}%`}
-          OR t.date::TEXT ILIKE ${`%${query}%`}
-          OR t.amount::TEXT ILIKE ${`%${query}%`}
+          t.name ILIKE ${`%${query?.search ?? ''}%`} 
+          OR t.date::TEXT ILIKE ${`%${query?.search ?? ''}%`}
+          OR t.amount::TEXT ILIKE ${`%${query?.search ?? ''}%`}
         )
+        ORDER BY 
+          CASE
+            WHEN ${query?.sort} = 'oldest' THEN t.created_at END,
+          CASE 
+            WHEN ${query?.sort} = 'az' THEN t.name END,
+          CASE
+            WHEN ${query?.sort} = 'za' THEN t.name END DESC,
+          CASE 
+            WHEN ${query?.sort} = 'highest' THEN t.amount END DESC,
+          CASE 
+            WHEN ${query?.sort} = 'lowest' THEN t.amount END,
+          t.created_at DESC
       `;
     }
 
