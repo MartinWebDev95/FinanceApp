@@ -64,7 +64,12 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
 
           <div>
             <label htmlFor="theme">Theme</label>
-            <CustomSelect data={themes} defaultValue={theme} placeholder="Select a theme" />
+            <CustomSelect 
+              data={themes} 
+              defaultValue={theme} 
+              placeholder="Select a theme" 
+              name="theme"
+            />
           </div>
         </fieldset>
 

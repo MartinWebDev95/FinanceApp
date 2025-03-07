@@ -1,7 +1,7 @@
 import { ArrowDownIcon } from '@/app/lib/utils';
 import { useEffect, useRef, useState } from 'react'
 
-const CustomSelect = ({ data, defaultValue, placeholder }) => {
+const CustomSelect = ({ data, defaultValue, placeholder, name }) => {
   const [selected, setSelected] = useState (
     data.find(option => option.value === defaultValue) || { label: placeholder, value: '' }
   );
@@ -15,13 +15,15 @@ const CustomSelect = ({ data, defaultValue, placeholder }) => {
         setIsOpen(false);
       }
     }
+
     document.addEventListener("click", handleClickOutside);
+
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
     <div ref={selectRef} className="relative w-full cursor-pointer mt-1">
-      <input type="hidden" name='theme' id='theme' defaultValue={selected.value} />
+      <input type="hidden" name={name} id={name} defaultValue={selected.value} />
 
       {/* Show the list and the option selected */}
       <div

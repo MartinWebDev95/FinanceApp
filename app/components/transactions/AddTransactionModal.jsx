@@ -63,7 +63,11 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
 
           <div className="mb-3">
             <label htmlFor="transactionCategory">Category</label>
-            <CustomSelect data={categories} placeholder="Select a category" />
+            <CustomSelect 
+              data={categories} 
+              placeholder="Select a category"
+              name="transactionCategory"
+            />
           </div>
           
           <div className="flex items-center gap-2">
