@@ -7,8 +7,7 @@ import { sortBy } from "@/app/lib/utils";
 
 export default async function TransactionsPage({ searchParams }){
 
-  const search = await searchParams;
-  const query = search?.search || '';
+  const query = await searchParams;
 
   const categories = await fetchCategories();
 
