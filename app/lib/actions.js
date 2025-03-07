@@ -4,6 +4,7 @@ import { auth, signIn } from "@/auth";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 export async function login(prevState, formData) {
   try {
@@ -176,4 +177,37 @@ export async function createNewTransaction(prevState, formData) {
 
   revalidatePath('/transactions');
   redirect('/transactions');
+}
+
+export async function createNewBudget(prevState, formData) {
+  const rawFormData = {
+    budgetCategory: formData.get('budgetCategory'),
+    budgetMaximumAmount: formData.get('budgetMaximumAmount'),
+    budgetTheme: formData.get('budgetTheme'),
+  };
+
+  const { 
+    budgetCategory,
+    budgetMaximumAmount,
+    budgetTheme,
+  } = rawFormData;
+
+  try {
+    //Fetch the category id
+    const categoryId = await sql`
+      SELECT id FROM categories WHERE value = ${budgetCategory}
+    `;
+
+    const { user } = await auth();
+
+    await sql`
+      INSERT INTO budgets (maximum, theme, category_id, user_id) VALUES (${budgetMaximumAmount}, ${budgetTheme}, ${categoryId.rows[0].id}, ${user.id})
+    `;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to create a new budget.');
+  }
+
+  revalidatePath('/budgets');
+  redirect('/budgets');
 }
