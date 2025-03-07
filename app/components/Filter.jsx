@@ -2,11 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowDownIcon, FilterIcon, getDefaultFilter } from "../lib/utils";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const Filter = ({ options, type }) => {
   const [selected, setSelected] = useState (getDefaultFilter({ type }));
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter(); 
 
   // Close the custom select when is clicked outside
   useEffect(() => {
@@ -15,9 +20,27 @@ const Filter = ({ options, type }) => {
         setIsOpen(false);
       }
     }
+
     document.addEventListener("click", handleClickOutside);
+    
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  const handleClick = ({ option }) => {
+    const params = new URLSearchParams(searchParams);
+    
+    if(option.value !== 'all' && option.value !== 'latest') {
+      params.set(type, option.value);
+    } else {
+      params.delete(type);
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+
+    setSelected({ label: option.label, value: option.value });
+    
+    setIsOpen(false);
+  }
 
   return (
     <div ref={selectRef} className="relative w-full cursor-pointer">
@@ -45,10 +68,7 @@ const Filter = ({ options, type }) => {
           {type === 'category' && (            
             <li 
               className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2"
-              onClick={() => {
-                setSelected({ label: 'All Transactions', value: 'all' });
-                setIsOpen(false);
-              }}
+              onClick={() => handleClick({ option: { label: 'All Transactions', value: 'all' } })}
             >
               All Transactions
             </li>
@@ -58,10 +78,7 @@ const Filter = ({ options, type }) => {
             <li
               key={option.value}
               className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2 "
-              onClick={() => {
-                setSelected({ label: option.label, value: option.value });
-                setIsOpen(false);
-              }}
+              onClick={() => handleClick({ option })}
             >
               {option.label}
             </li>
