@@ -1,7 +1,10 @@
-import { categories, themes } from "@/app/lib/utils";
+import { themes } from "@/app/lib/utils";
 import CustomSelect from "../pots/CustomSelect";
+import { useActionState } from "react";
+import { createNewBudget } from "@/app/lib/actions";
 
-const AddBudgetModal = ({ isOpened, setIsOpened }) => {
+const AddBudgetModal = ({ isOpened, setIsOpened, categories }) => {
+  const [errorMessage, formAction] = useActionState(createNewBudget, undefined);
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
@@ -18,7 +21,7 @@ const AddBudgetModal = ({ isOpened, setIsOpened }) => {
       className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
       onClick={handleCloseModal}
     >
-      <form action="" method="dialog" className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">Add New Budget</legend>
 
@@ -27,18 +30,26 @@ const AddBudgetModal = ({ isOpened, setIsOpened }) => {
           </p>
 
           <div className="mb-3">
-            <label htmlFor="potName">Category</label>
-            <CustomSelect data={categories} placeholder="Select a category" />
+            <label htmlFor="budgetCategory">Category</label>
+            <CustomSelect 
+              data={categories} 
+              placeholder="Select a category" 
+              name="budgetCategory"
+            />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="targetAmount">Maximum Spend</label>
-            <input className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" type="number" name="targetAmount" id="targetAmount" placeholder="$ e.g. 2000" />
+            <label htmlFor="budgetMaximumAmount">Maximum Spend</label>
+            <input className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" type="number" name="budgetMaximumAmount" id="budgetMaximumAmount" placeholder="$ e.g. 2000" />
           </div>
 
           <div>
-            <label htmlFor="targetTheme">Theme</label>
-            <CustomSelect data={themes} placeholder="Select a theme" />
+            <label htmlFor="budgetTheme">Theme</label>
+            <CustomSelect 
+              data={themes} 
+              placeholder="Select a theme" 
+              name="budgetTheme"
+            />
           </div>
         </fieldset>
 
@@ -50,4 +61,4 @@ const AddBudgetModal = ({ isOpened, setIsOpened }) => {
   )
 }
 
-export default AddBudgetModal
+export default AddBudgetModal;
