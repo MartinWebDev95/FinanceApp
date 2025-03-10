@@ -212,3 +212,27 @@ export function getDefaultFilter({ type }){
       return null;
   }
 }
+
+//Function to format the recurring bills date
+export function recurringBillsDateFormatter({ date }){
+  const newDate = new Date(date);
+
+  let formattedDate = `Monthly-${newDate.getDate()}`;
+  
+  switch (newDate.getDate() % 10) {
+    case 1:  
+      formattedDate += "st"; 
+      break;
+    case 2:  
+      formattedDate += "nd";
+      break;
+    case 3:  
+      formattedDate += "rd";
+      break;
+    default: 
+      formattedDate += "th";
+      break;
+  }
+
+  return formattedDate;
+}
