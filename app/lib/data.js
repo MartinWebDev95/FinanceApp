@@ -91,3 +91,37 @@ export async function fetchTransactions({ limit = 0, query = '' } = {}) {
     throw new Error('Failed to fetch transactions.');
   }
 }
+
+export async function fetchRecurringBills({ query = '' } = {}) {
+  try {
+    const { user } = await auth();
+
+    const data = await sql`
+      SELECT id, avatar, name, date, amount, created_at 
+      FROM transactions
+      WHERE user_id = ${user.id} 
+      AND recurring = TRUE
+      AND (
+        name ILIKE ${`%${query?.search ?? ''}%`} 
+        OR date::TEXT ILIKE ${`%${query?.search ?? ''}%`}
+        OR amount::TEXT ILIKE ${`%${query?.search ?? ''}%`}
+      )
+      ORDER BY 
+        CASE
+          WHEN ${query?.sort} = 'oldest' THEN created_at END,
+        CASE 
+          WHEN ${query?.sort} = 'az' THEN name END,
+        CASE
+          WHEN ${query?.sort} = 'za' THEN name END DESC,
+        CASE 
+          WHEN ${query?.sort} = 'highest' THEN amount END,
+        CASE 
+          WHEN ${query?.sort} = 'lowest' THEN amount END DESC,
+        created_at DESC
+    `;
+
+    return data.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch recurring bills');
+  }
+}
