@@ -97,8 +97,14 @@ export async function fetchRecurringBills({ query = '' } = {}) {
     const { user } = await auth();
 
     const data = await sql`
-      SELECT id, avatar, name, date, amount, created_at 
-      FROM transactions
+      SELECT 
+        id, 
+        avatar, 
+        name, 
+        date, 
+        amount, 
+        created_at
+      FROM transactions 
       WHERE user_id = ${user.id} 
       AND recurring = TRUE
       AND (
@@ -123,5 +129,55 @@ export async function fetchRecurringBills({ query = '' } = {}) {
     return data.rows;
   } catch (error) {
     throw new Error('Failed to fetch recurring bills');
+  }
+}
+
+export async function fetchBillsSummary() {
+  try {
+    const { user } = await auth();
+
+    const totalBills = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id} 
+      AND recurring = TRUE;
+    `;
+
+    const paidBills = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id} 
+      AND recurring = TRUE
+      AND EXTRACT(DAY FROM date) <= EXTRACT(DAY FROM NOW());
+    `;
+
+    const upcomingBills = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id} 
+      AND recurring = TRUE
+      AND EXTRACT(DAY FROM date) > EXTRACT(DAY FROM NOW());
+    `;
+
+    const dueSoon = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id} 
+      AND recurring = TRUE
+      AND EXTRACT(DAY FROM date) > EXTRACT(DAY FROM NOW())
+      AND EXTRACT(DAY FROM date) <= EXTRACT(DAY FROM NOW() + INTERVAL '5 days');
+    `; 
+
+    const data = await Promise.all([totalBills, paidBills, upcomingBills, dueSoon]);
+
+    return ({
+      totalBills: data[0].rows[0],
+      paidBills: data[1].rows[0],
+      upcomingBills: data[2].rows[0],
+      dueSoon: data[3].rows[0]
+    }); 
+    
+  } catch (error) {
+    throw new Error('Failed to fetch bills summary');
   }
 }
