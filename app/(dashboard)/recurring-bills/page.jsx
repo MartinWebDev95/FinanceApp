@@ -1,10 +1,12 @@
 import { RecurringBillsIcon, sortBy } from "@/app/lib/utils";
-import data from '@/app/lib/data.json';
 import Table from "@/app/components/recurring-bills/Table";
 import Search from "@/app/components/Search";
 import Filter from "@/app/components/Filter";
 
-export default function RecurringBillsPage(){
+export default async function RecurringBillsPage({ searchParams }){
+
+  const query = await searchParams;
+
   return (
     <>
       <h1 className="text-3xl font-bold">Recurring Bills</h1>
@@ -47,7 +49,7 @@ export default function RecurringBillsPage(){
             </div>
           </div>
           
-          <Table data={data} />
+          <Table query={query} />
         </div>
       </div>
     </>
