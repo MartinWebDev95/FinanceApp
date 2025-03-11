@@ -1,8 +1,12 @@
 import { ArrowDetails } from "@/app/lib/utils";
 import Link from "next/link";
 import { BtnMenuBudget } from "../pots/buttons";
+import { fetchTransactionsByCategory } from "@/app/lib/data";
 
-const Budget = ({ budget, data }) => {
+const Budget = async ({ budget }) => {
+
+  const latestTransactions = await fetchTransactionsByCategory({ categoryId: budget.category_id })
+
   return (
     <div className="bg-white rounded-md shadow-lg p-6 mb-6">
       <div className="flex items-center justify-between relative">
@@ -13,7 +17,7 @@ const Budget = ({ budget, data }) => {
           >
           </span>
           
-          <span className="text-xl font-bold">{budget.category}</span> 
+          <span className="text-xl font-bold">{budget.label}</span> 
         </h2>
 
         <BtnMenuBudget />
@@ -36,13 +40,15 @@ const Budget = ({ budget, data }) => {
         <div className="relative">
           <div className="absolute left-0 top-0 h-full w-1 rounded-full" style={{ backgroundColor: budget.theme }}/>
           <p className="pl-4 text-xs text-gray-500">Spent</p>
-          <p className="pl-4 font-bold">$72374</p>
+          <p className="pl-4 font-bold">${Math.abs(budget.total_transactions_amount)}</p>
         </div>
         
         <div className="relative">
           <div className="absolute left-0 top-0 h-full w-1 rounded-full bg-amber-200"/>
           <p className="pl-4 text-xs text-gray-500">Free</p>
-          <p className="pl-4 font-bold">$675656</p>
+          <p className="pl-4 font-bold">
+            ${budget.maximum - Math.abs(budget.total_transactions_amount)}
+          </p>
         </div>
       </div>
 
@@ -51,7 +57,7 @@ const Budget = ({ budget, data }) => {
           <h2 className="text-neutral-900 text-lg font-bold">Latest Spending</h2>
           
           <Link 
-            href='/transactions' 
+            href={`/transactions?category=${budget.value}`} 
             className="flex items-center gap-2 group text-slate-600"
           >
             <span>See details</span>
@@ -60,15 +66,17 @@ const Budget = ({ budget, data }) => {
         </div>
 
         <ul className="mt-2">
-          {data.transactions.filter((item) => item.category === budget.category).splice(0, 3).map((transaction, index) => (
-            <li key={index} className="flex items-center justify-between border-b border-neutral-300 py-2">
+          {latestTransactions.map(transaction => (
+            <li key={transaction.id} className="flex items-center justify-between border-b border-neutral-300 py-2">
               <div className="flex items-center gap-2">
                 <img 
-                  src="./assets/Logo-1.jpg" 
+                  src={transaction.avatar}
                   alt={transaction.name} 
                   className="rounded-full w-9 h-9"
                 />
-                <p className="font-bold text-neutral-900">{transaction.name}</p>
+                <p className="font-bold text-neutral-900">
+                  {transaction.name}
+                </p>
               </div>
 
               <div className="text-right">
@@ -79,7 +87,9 @@ const Budget = ({ budget, data }) => {
                     `-$${Math.abs(transaction.amount)}`
                   )}
                 </p>
-                <p className="text-xs text-gray-500">{transaction.date.split('T')[0]}</p>
+                <p className="text-xs text-gray-500">
+                  {new Date(transaction.date).toLocaleDateString()}
+                </p>
               </div>
             </li>
           ))}
