@@ -28,8 +28,14 @@ const Table = async ({ query }) => {
               <img src="./assets/Logo-1.jpg" alt={bill.name} className="w-8 h-8 rounded-full" />
               {bill.name}
             </td>
-            <td className="font-normal text-gray-500 text-xs">
-              {recurringBillsDateFormatter({ date: bill.date })}
+            <td 
+              className="font-normal text-gray-500 text-xs" 
+              style={{ color: recurringBillsDateFormatter({ date: bill.date }).color }}
+            >
+              <span className="flex items-center gap-1">
+                {recurringBillsDateFormatter({ date: bill.date }).formattedDate}
+                {recurringBillsDateFormatter({ date: bill.date }).icon}
+              </span>
             </td>
             <td className="text-xs md:text-base">${Math.abs(bill.amount)}</td>
           </tr>

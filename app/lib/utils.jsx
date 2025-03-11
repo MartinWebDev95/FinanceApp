@@ -143,7 +143,25 @@ export function FilterIcon() {
   )
 }
 
-//Themes for CustomSelect
+export function CheckIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-circle-check">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
+    </svg>
+  )
+}
+
+export function ExclamationIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-exclamation-circle">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-5 11.66a1 1 0 0 0 -1 1v.01a1 1 0 0 0 2 0v-.01a1 1 0 0 0 -1 -1m0 -7a1 1 0 0 0 -1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0 -1 -1" />
+    </svg>
+  );
+}
+
+// Themes for CustomSelect
 export const themes = [
   { label: 'Green', value: '#1bf526' },
   { label: 'Purple', value: '#a909b8' },
@@ -157,10 +175,10 @@ export const themes = [
   { label: 'Gray', value: '#7a716b' },
 ];
 
-//Fonts
+// Fonts
 export const ptSans = PT_Sans({ weight: ['400', '700'], subsets: ['latin'] });
 
-//NavLinks
+// NavLinks
 export const getNavLinks = () => {
   return [
     { name: "Overview", href: "/", icon: <HomeIcon/> },
@@ -171,13 +189,13 @@ export const getNavLinks = () => {
   ];
 };
 
-//Calculate Percentage
+// Calculate Percentage
 export const calculatePercentage = ({ total, target }) => {
   if(total > target) return 100;
   return ((total / target) * 100).toFixed(2);
 };
 
-//Sort Data
+// Sort Data
 export const sortBy = [
     { label: "Latest", value: "latest" },
     { label: "Oldest", value: "oldest" },
@@ -187,7 +205,7 @@ export const sortBy = [
     { label: "Lowest Amount", value: "lowest" },
 ];
 
-//Categories
+// Categories
 export const categories = [
   { label: "All transactions", value: "all" },
   { label: "General", value: "general" },
@@ -202,6 +220,7 @@ export const categories = [
   { label: "Transportation", value: "transportation" },
 ];
 
+// Function that return the default filter when there is no filter
 export function getDefaultFilter({ type }){
   switch(type){
     case 'sort':
@@ -213,13 +232,16 @@ export function getDefaultFilter({ type }){
   }
 }
 
-//Function to format the recurring bills date
+// Function to format the recurring bills date
 export function recurringBillsDateFormatter({ date }){
-  const newDate = new Date(date);
+  const billDate = new Date(date);
+  const today = new Date(Date.now());
 
-  let formattedDate = `Monthly-${newDate.getDate()}`;
+  let formattedDate = `Monthly-${billDate.getDate()}`;
+  let icon = '';
+  let color = '';
   
-  switch (newDate.getDate() % 10) {
+  switch (billDate.getDate() % 10) {
     case 1:  
       formattedDate += "st"; 
       break;
@@ -234,5 +256,17 @@ export function recurringBillsDateFormatter({ date }){
       break;
   }
 
-  return formattedDate;
+  // If the bill date is prior to the current date, show a check icon
+  if(billDate.getDate() <= today.getDate()) {
+    icon = <CheckIcon />;
+    color = '#22c55e';
+  }
+    
+  /* If the bill date is between today's date and today's date plus five days, show an exclamation icon */
+  if((billDate.getDate() > today.getDate()) && (billDate.getDate() <= (today.getDate() + 5))) {
+    icon = <ExclamationIcon />;
+    color = '#dc2626';
+  }
+
+  return { formattedDate, icon, color };
 }
