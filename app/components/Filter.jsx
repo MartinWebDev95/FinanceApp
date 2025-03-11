@@ -26,6 +26,19 @@ const Filter = ({ options, type }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  // Set the category filter when the user is coming from the budgets page
+  useEffect(() => {
+    if (type != 'category') return;
+
+    const params = new URLSearchParams(searchParams);
+
+    if(!params.get('category')) return;
+    
+    const selectedOption = options.find(option => option.value === params.get('category'));
+    
+    setSelected({ label: selectedOption.label, value: selectedOption.value });
+  }, []);
+
   const handleClick = ({ option }) => {
     const params = new URLSearchParams(searchParams);
     
