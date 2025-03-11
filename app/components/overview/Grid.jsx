@@ -1,11 +1,12 @@
 import { ArrowDetails, PotsIcon } from "@/app/lib/utils";
 import Link from "next/link";
-import { fetchPots, fetchTransactions } from "@/app/lib/data";
+import { fetchBillsSummary, fetchPots, fetchTransactions } from "@/app/lib/data";
 
 const Grid = async () => {
 
   const pots = await fetchPots({ limit: 4 });
   const transactions = await fetchTransactions({ limit: 4 });
+  const { paidBills, upcomingBills, dueSoon } = await fetchBillsSummary();
 
   return (
     <div className="mt-10 lg:mt-8 lg:grid lg:grid-cols-2 lg:auto-rows-min lg:gap-4 h-full">
@@ -112,15 +113,15 @@ const Grid = async () => {
         <div className="w-full mt-4">
           <p className="rounded-md py-4 w-full flex items-center justify-between bg-gray-100 pr-3 relative before:absolute before:rounded-l-md before:top-0 before:bottom-0 before:w-2 before:h-full before:bg-green-300 mb-2">
             <span className="text-gray-500 pl-3">Paid Bills</span>
-            <span className="font-bold">$1000000</span>
+            <span className="font-bold">${Math.abs(paidBills.sum)}</span>
           </p>
           <p className="rounded-md py-4 w-full flex items-center justify-between bg-gray-100 pr-3 relative before:absolute before:rounded-l-md before:top-0 before:bottom-0 before:w-2 before:h-full before:bg-amber-300 mb-2">
             <span className="text-gray-500 pl-3">Total Upcoming</span>
-            <span className="font-bold">$1000000</span>
+            <span className="font-bold">${Math.abs(upcomingBills.sum)}</span>
           </p>
           <p className="rounded-md py-4 w-full flex items-center justify-between bg-gray-100 pr-3 relative before:absolute before:rounded-l-md before:top-0 before:bottom-0 before:w-2 before:h-full before:bg-red-400">
             <span className="text-gray-500 pl-3">Due Soon</span>
-            <span className="text-red-600 font-bold">$1000000</span>
+            <span className="text-red-600 font-bold">${Math.abs(dueSoon.sum)}</span>
           </p>
         </div>
       </div>

@@ -2,10 +2,12 @@ import { RecurringBillsIcon, sortBy } from "@/app/lib/utils";
 import Table from "@/app/components/recurring-bills/Table";
 import Search from "@/app/components/Search";
 import Filter from "@/app/components/Filter";
+import { fetchBillsSummary } from "@/app/lib/data";
 
 export default async function RecurringBillsPage({ searchParams }){
 
   const query = await searchParams;
+  const { totalBills, paidBills, upcomingBills, dueSoon } = await fetchBillsSummary();
 
   return (
     <>
@@ -18,7 +20,7 @@ export default async function RecurringBillsPage({ searchParams }){
 
             <div>
               <p className="mt-4 mb-2 font-bold text-lg">Total Bills</p>
-              <p className="font-bold text-4xl">$1000000</p>
+              <p className="font-bold text-4xl">${Math.abs(totalBills.sum)}</p>
             </div>
           </div>
 
@@ -26,15 +28,15 @@ export default async function RecurringBillsPage({ searchParams }){
             <p className="text-neutral-900 mb-4 text-lg font-bold">Summary</p>
             <p className="pb-4 w-full border-b border-gray-200 flex items-center justify-between">
               <span className="text-gray-500">Paid Bills</span>
-              <span>$1000000</span>
+              <span>${Math.abs(paidBills.sum)}</span>
             </p>
             <p className="py-4 w-full border-b border-gray-200 flex items-center justify-between">
               <span className="text-gray-500">Total Upcoming</span>
-              <span>$1000000</span>
+              <span>${Math.abs(upcomingBills.sum)}</span>
             </p>
             <p className="pt-4 w-full flex items-center justify-between">
               <span className="text-gray-500">Due Soon</span>
-              <span className="text-red-600">$1000000</span>
+              <span className="text-red-600">${Math.abs(dueSoon.sum)}</span>
             </p>
           </div>
         </div>
