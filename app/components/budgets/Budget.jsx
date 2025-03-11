@@ -31,10 +31,10 @@ const Budget = async ({ budget }) => {
           className="h-3 rounded-full" 
           style={{ 
             backgroundColor: budget.theme, 
-            width: calculatePercentage({ 
+            width: `${calculatePercentage({ 
               total: Math.abs(budget.total_transactions_amount), 
               target: budget.maximum 
-            }) + '%'
+            })}%`
           }}
         /> 
       </div>
