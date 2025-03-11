@@ -92,6 +92,53 @@ export async function fetchTransactions({ limit = 0, query = '' } = {}) {
   }
 }
 
+export async function fetchBudgets() {
+  try {
+    const { user } = await auth();
+
+    const data = await sql`
+      SELECT 
+        b.id, 
+        c.label, 
+        b.maximum, 
+        b.theme, 
+        b.category_id, 
+        c.value,
+        SUM(t.amount) AS total_transactions_amount
+      FROM 
+        budgets b
+      INNER JOIN categories c ON c.id = b.category_id
+      INNER JOIN transactions t ON t.category_id = c.id
+      WHERE 
+        b.user_id = ${user.id}
+      GROUP BY 
+        b.id, c.label, b.maximum, b.theme, b.category_id, c.value;
+    `;
+
+    return data.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch budgets');
+  }
+}
+
+export async function fetchTransactionsByCategory({ categoryId }) {
+  try {
+    const { user } = await auth();
+    
+    const data = await sql`
+      SELECT id, avatar, name, date, amount
+      FROM transactions
+      WHERE category_id = ${categoryId} AND user_id = ${user.id}
+      ORDER BY created_at DESC
+      LIMIT 3
+    `;
+
+    return data.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch transactions by category');    
+  }
+}
+
 export async function fetchRecurringBills({ query = '' } = {}) {
   try {
     const { user } = await auth();
