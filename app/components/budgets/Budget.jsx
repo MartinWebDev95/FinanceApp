@@ -1,4 +1,4 @@
-import { ArrowDetails } from "@/app/lib/utils";
+import { ArrowDetails, calculatePercentage } from "@/app/lib/utils";
 import Link from "next/link";
 import { BtnMenuBudget } from "../pots/buttons";
 import { fetchTransactionsByCategory } from "@/app/lib/data";
@@ -31,7 +31,10 @@ const Budget = async ({ budget }) => {
           className="h-3 rounded-full" 
           style={{ 
             backgroundColor: budget.theme, 
-            width: `50%` 
+            width: calculatePercentage({ 
+              total: Math.abs(budget.total_transactions_amount), 
+              target: budget.maximum 
+            }) + '%'
           }}
         /> 
       </div>
