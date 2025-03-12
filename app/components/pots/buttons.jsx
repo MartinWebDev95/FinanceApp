@@ -116,7 +116,7 @@ export function BtnAddNewBudget({ categories }) {
   )
 }
 
-export function BtnMenuBudget() {
+export function BtnMenuBudget({ setIsOpenedEditModal, setIsOpenedDeleteModal }) {
 
   const [isOpened, setIsOpened] = useState(false);
 
@@ -130,7 +130,12 @@ export function BtnMenuBudget() {
         <PotMenuIcon />
       </button>
 
-      <Menu isOpened={isOpened} setIsOpened={setIsOpened} />
+      <Menu 
+        isOpened={isOpened} 
+        setIsOpenedMenu={setIsOpened}
+        setIsOpenedEditModal={setIsOpenedEditModal}
+        setIsOpenedDeleteModal={setIsOpenedDeleteModal} 
+      />
     </>
   )
 }
