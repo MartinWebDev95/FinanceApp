@@ -48,7 +48,7 @@ export default async function BudgetsPage() {
         
         <div className="w-full lg:w-3/5">
           {budgets.map(budget => (
-            <Budget key={budget.id} budget={budget} />
+            <Budget key={budget.id} budget={budget} categories={categories} />
           ))}
         </div>
       </div>
