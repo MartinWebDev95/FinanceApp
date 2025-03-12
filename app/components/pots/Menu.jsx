@@ -11,7 +11,7 @@ const Menu = ({ isOpened, setIsOpenedMenu, setIsOpenedEditModal, setIsOpenedDele
             setIsOpenedMenu(false);
           }}
         >
-          Edit Pot
+          Edit
         </button>
 
         <button 
@@ -22,7 +22,7 @@ const Menu = ({ isOpened, setIsOpenedMenu, setIsOpenedEditModal, setIsOpenedDele
             setIsOpenedMenu(false);
           }}
         >
-          Delete Pot
+          Delete
         </button>
       </div>
     </>
