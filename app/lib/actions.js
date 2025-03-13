@@ -211,3 +211,54 @@ export async function createNewBudget(prevState, formData) {
   revalidatePath('/budgets');
   redirect('/budgets');
 }
+
+export async function editBudget(id, prevState, formData) {
+  const rawFormData = {
+    budgetCategory: formData.get('budgetCategory'),
+    budgetMaximumAmount: formData.get('budgetMaximumAmount'),
+    budgetTheme: formData.get('budgetTheme'),
+  };
+
+  const { 
+    budgetCategory,
+    budgetMaximumAmount,
+    budgetTheme,
+  } = rawFormData;
+
+  try {
+    const { user } = await auth();
+    
+  // Fetch the category id
+    const categoryId = await sql`
+      SELECT id FROM categories WHERE value = ${budgetCategory}
+    `;
+
+  // Update the budget
+    await sql`
+      UPDATE budgets SET maximum = ${budgetMaximumAmount}, theme = ${budgetTheme}, category_id = ${categoryId.rows[0].id} WHERE id = ${id} AND user_id = ${user.id}
+    `;
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to update budget.');
+  }
+
+  revalidatePath('/budgets');
+  redirect('/budgets');
+}
+
+export async function deleteBudget(id) {
+  try {
+    const { user } = await auth();
+
+    await sql`
+      DELETE FROM budgets WHERE id = ${id} AND user_id = ${user.id}
+    `;
+  } catch(error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete budget.');
+  }
+
+  revalidatePath('/budgets');
+  redirect('/budgets');
+}
