@@ -1,10 +1,13 @@
 import { LogoutIcon } from "../lib/utils";
 import Cards from "../components/overview/Cards";
 import Grid from "../components/overview/Grid";
-import data from '../lib/data.json';
 import { signOut } from "@/auth";
+import { fetchFinancesData } from "../lib/data";
 
-export default function OverviewPage(){
+export default async function OverviewPage(){
+  
+  const { currentBalance, income, expenses } = await fetchFinancesData();
+
   return (
       <>
       <div className="flex items-center justify-between">
@@ -24,9 +27,9 @@ export default function OverviewPage(){
       </div>
 
       <div className="mt-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
-        <Cards title='Current Balance' data={data.balance.current} main />
-        <Cards title='Income' data={data.balance.income} />
-        <Cards title='Expenses' data={data.balance.expenses} />
+        <Cards title='Current Balance' data={currentBalance.sum} main />
+        <Cards title='Income' data={income.sum} />
+        <Cards title='Expenses' data={Math.abs(expenses.sum).toFixed(2)} />
       </div>
 
       <Grid />
