@@ -228,3 +228,40 @@ export async function fetchBillsSummary() {
     throw new Error('Failed to fetch bills summary');
   }
 }
+
+export async function fetchFinancesData() {
+  try {
+    const { user } = await auth();
+
+    const currentBalance = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id};
+    `;
+
+    const income = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id}
+      AND amount > 0;
+    `;
+
+    const expenses = sql`
+      SELECT SUM(amount)
+      FROM transactions 
+      WHERE user_id = ${user.id}
+      AND amount < 0;
+    `;
+
+    const data = await Promise.all([currentBalance, income, expenses]);
+
+    return ({
+      currentBalance: data[0].rows[0],
+      income: data[1].rows[0],
+      expenses: data[2].rows[0]
+    }); 
+    
+  } catch (error) {
+    throw new Error('Failed to fetch finances data');
+  }
+}
