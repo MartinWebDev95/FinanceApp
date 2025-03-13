@@ -1,10 +1,16 @@
 import { themes } from "@/app/lib/utils";
 import CustomSelect from "../pots/CustomSelect";
 import { useActionState } from "react";
-import { createNewBudget } from "@/app/lib/actions";
+import { createNewBudget, editBudget } from "@/app/lib/actions";
 
 const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = false }) => {
-  const [errorMessage, formAction] = useActionState(createNewBudget, undefined);
+
+  const updateBudget = editBudget.bind(null, budget?.id);
+
+  const [errorMessage, formAction] = useActionState(
+    edit ? updateBudget : createNewBudget, 
+    undefined
+  );
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
