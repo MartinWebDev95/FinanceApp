@@ -1,4 +1,9 @@
+import { deleteBudget } from "@/app/lib/actions";
+
 const DeleteBudgetModal = ({ isOpened, setIsOpened, budget }) => {
+  
+  const deleteBudgetById = deleteBudget.bind(null, budget.id);
+
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
       setIsOpened(false);
@@ -9,7 +14,7 @@ const DeleteBudgetModal = ({ isOpened, setIsOpened, budget }) => {
 
   return (
     <dialog id="deletePotDialog" aria-modal className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} onClick={handleCloseModal}>
-      <form action='' className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={deleteBudgetById} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             Delete '{`${budget.label}`}'?
