@@ -4,8 +4,10 @@ import { createNewTransaction } from "@/app/lib/actions";
 
 const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
 
-  const [errorMessage, formAction] = useActionState(createNewTransaction, undefined); 
+  const initialState = { errors: {} };
 
+  const [errorMessage, formAction] = useActionState(createNewTransaction, initialState);
+  
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
       setIsOpened(false);
@@ -36,6 +38,12 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
               placeholder="e.g. Urban Services Hub" 
               className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" 
             />
+
+            {errorMessage.errors?.transactionName && (
+              errorMessage.errors.transactionName.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
 
           <div className="mb-3">
@@ -47,6 +55,12 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
               placeholder="Pick a date" 
               className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" 
             />
+
+            {errorMessage.errors?.transactionDate && (
+              errorMessage.errors.transactionDate.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg.invalid_type_error}</p>
+              ))
+            )}
           </div>
 
           <div className="mb-3">
@@ -59,6 +73,12 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
               placeholder="$ e.g. 2000" 
               className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" 
             />
+
+            {errorMessage.errors?.transactionAmount && (
+              errorMessage.errors.transactionAmount.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
 
           <div className="mb-3">
@@ -68,6 +88,12 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
               placeholder="Select a category"
               name="transactionCategory"
             />
+
+            {errorMessage.errors?.transactionCategory && (
+              errorMessage.errors.transactionCategory.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
           
           <div className="flex items-center gap-2">
@@ -75,10 +101,9 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
             <input 
               type="checkbox" 
               name="transactionRecurring" 
-              id="transactionRecurring"  
+              id="transactionRecurring" 
             />
           </div>
-
         </fieldset>
 
         <button type="submit" className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200">

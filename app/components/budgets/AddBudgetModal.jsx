@@ -7,9 +7,11 @@ const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = fals
 
   const updateBudget = editBudget.bind(null, budget?.id);
 
+  const initialState = { errors: {} };
+
   const [errorMessage, formAction] = useActionState(
     edit ? updateBudget : createNewBudget, 
-    undefined
+    initialState
   );
 
   const handleCloseModal = (e) => {
@@ -47,6 +49,12 @@ const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = fals
               placeholder="Select a category" 
               name="budgetCategory"
             />
+
+            {errorMessage.errors?.budgetCategory && (
+              errorMessage.errors.budgetCategory.map((msg, index) => (
+                <p key={index} className="text-red-500 text-xs mt-1">{msg}</p>
+              ))              
+            )}
           </div>
 
           <div className="mb-3">
@@ -58,6 +66,12 @@ const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = fals
               id="budgetMaximumAmount" 
               placeholder="$ e.g. 2000" 
             />
+
+            {errorMessage.errors?.budgetMaximumAmount && (
+              errorMessage.errors.budgetMaximumAmount.map((msg, index) => (
+                <p key={index} className="text-red-500 text-xs mt-1">{msg}</p>
+              ))              
+            )}
           </div>
 
           <div>
@@ -68,6 +82,12 @@ const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = fals
               placeholder="Select a theme" 
               name="budgetTheme"
             />
+
+            {errorMessage.errors?.budgetTheme && (
+              errorMessage.errors.budgetTheme.map((msg, index) => (
+                <p key={index} className="text-red-500 text-xs mt-1">{msg}</p>
+              ))              
+            )}
           </div>
         </fieldset>
 

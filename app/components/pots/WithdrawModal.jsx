@@ -6,9 +6,11 @@ const WithdrawModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
 
   const [newAmount, setNewAmount] = useState(0);
 
+  const initialState = { errors: {} };
+
   const updatePot = updateMoneyPot.bind(null, id, { type: 'withdraw' });
 
-  const [errorMessage, formAction] = useActionState(updatePot, undefined)
+  const [errorMessage, formAction] = useActionState(updatePot, initialState)
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
@@ -73,15 +75,21 @@ const WithdrawModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
             </p>
 
             <div className="mt-3">
-              <label htmlFor="newAmount">Amount to Withdraw</label>
+              <label htmlFor="targetAmount">Amount to Withdraw</label>
               <input 
                 className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" type="number" 
-                name="newAmount" 
-                id="newAmount" 
+                name="targetAmount" 
+                id="targetAmount" 
                 placeholder="Enter amount"
                 value={newAmount} 
                 onChange={handleNewAmount}
               />
+
+              {errorMessage.errors?.targetAmount && (
+                errorMessage.errors.targetAmount.map((msg, index) => (
+                  <p key={index} className="text-red-500 text-sm">{msg}</p>
+                ))
+              )}
             </div>
           </div>
         </fieldset>

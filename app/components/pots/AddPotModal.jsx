@@ -4,10 +4,12 @@ import { useActionState } from "react";
 import { createNewPot, editPot } from "@/app/lib/actions";
 
 const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = false }) => {
+
+  const initialState = { errors: {} };
   
   const updatePot = editPot.bind(null, id);
 
-  const [errorMessage, formAction] = useActionState(edit ? updatePot : createNewPot, undefined);
+  const [errorMessage, formAction] = useActionState(edit ? updatePot : createNewPot, initialState);
 
   const handleCloseModal = (e) => {
     if(e.target.ariaModal){
@@ -48,6 +50,12 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               defaultValue={name}
               placeholder="e.g. Rainy Days" 
             />
+
+            {errorMessage.errors?.potName && (
+              errorMessage.errors.potName.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
 
           <div className="mb-3">
@@ -56,10 +64,16 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               className="border border-gray-400 rounded-md block mt-1 py-1 px-2 w-full" 
               type="number" 
               name="targetAmount" 
-              id="targetAmount" 
+              id="targetAmount"
               defaultValue={target}
               placeholder="$ e.g. 2000" 
             />
+
+            {errorMessage.errors?.targetAmount && (
+              errorMessage.errors.targetAmount.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
 
           <div>
@@ -70,6 +84,12 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               placeholder="Select a theme" 
               name="theme"
             />
+
+            {errorMessage.errors?.theme && (
+              errorMessage.errors.theme.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
           </div>
         </fieldset>
 
