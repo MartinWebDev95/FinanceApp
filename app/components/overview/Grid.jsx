@@ -1,17 +1,20 @@
 import { ArrowDetails, PotsIcon } from "@/app/lib/utils";
 import Link from "next/link";
-import { fetchBillsSummary, fetchPots, fetchTransactions } from "@/app/lib/data";
+import { fetchBillsSummary, fetchBudgets, fetchPots, fetchTransactions } from "@/app/lib/data";
+import PieChart from "./PieChart";
+import BudgetsSummary from "../budgets/BudgetsSummary";
 
 const Grid = async () => {
 
+  const { paidBills, upcomingBills, dueSoon } = await fetchBillsSummary();
   const pots = await fetchPots({ limit: 4 });
   const transactions = await fetchTransactions({ limit: 4 });
-  const { paidBills, upcomingBills, dueSoon } = await fetchBillsSummary();
+  const budgets = await fetchBudgets();
 
   return (
-    <div className="mt-10 lg:mt-8 lg:grid lg:grid-cols-2 lg:auto-rows-min lg:gap-4 h-full">
+    <div className="mt-10 lg:mt-8 columns-1 lg:columns-2 gap-6">
       {/* Pots */}
-      <div className="p-6 mb-6 lg:mb-0 bg-white rounded-md shadow-lg lg:col-start-1 lg:col-end-2 w-full h-fit">
+      <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">
         <div className="w-full flex items-center justify-between">
           <h2 className="text-neutral-900 text-2xl font-bold">Pots</h2>
           <Link href='/pots' className="flex items-center gap-2 group text-slate-600">
@@ -51,7 +54,7 @@ const Grid = async () => {
       </div>
       
       {/* Budgets */}
-      <div className="p-6 mb-6 lg:mb-0 bg-white rounded-md shadow-lg lg:col-start-2 lg:col-end-3 h-fit">
+      <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">
         <div className="w-full flex items-center justify-between">
           <h2 className="text-neutral-900 text-2xl font-bold">Budgets</h2>
           <Link href='/budgets' className="flex items-center gap-2 group text-slate-600">
@@ -59,10 +62,20 @@ const Grid = async () => {
             <ArrowDetails />
           </Link>
         </div>
+
+        <div className="flex flex-col md:flex-row lg:flex-col items-center gap-2">
+          <div className="w-80 md:w-1/2 lg:w-80">
+            <PieChart budgets={budgets} />
+          </div>
+
+          <div className="w-full md:w-1/2 lg:w-full">
+            <BudgetsSummary budgets={budgets} />
+          </div>
+        </div>
       </div>
 
       {/* Transactions */}
-      <div className="p-6 mb-6 lg:mb-0 bg-white rounded-md shadow-lg lg:col-start-1 lg:col-end-2 h-fit">
+      <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">
         <div className="w-full flex items-center justify-between">
           <h2 className="text-neutral-900 text-2xl font-bold">Transactions</h2>
           <Link href='/transactions' className="flex items-center gap-2 group text-slate-600">
@@ -101,7 +114,7 @@ const Grid = async () => {
       </div>
 
       {/* Recurring Bills */}
-      <div className="p-6 bg-white rounded-md shadow-lg lg:col-start-2 lg:col-end-3 h-fit">
+      <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">
         <div className="w-full flex items-center justify-between">
           <h2 className="text-neutral-900 text-2xl font-bold">Recurring Bills</h2>
           <Link href='/recurring-bills' className="flex items-center gap-2 group text-slate-600">
