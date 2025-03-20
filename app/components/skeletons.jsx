@@ -117,3 +117,46 @@ export const RecurringBillsSummarySkeleton = () => {
     </div>
   )
 }
+
+export const TransactionsTableSkeleton = () => {
+  return (
+    <table className="w-full table-auto bg-white">
+      <thead className="text-left">
+        <tr>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {[...Array(10)].map((_, i) => (
+          <tr key={i} className="border-t border-gray-200 w-full">
+            <td className="flex items-center gap-4 py-4">
+              <div className="animate-pulse bg-slate-200 w-9 h-9 rounded-full"></div>
+              <div className="animate-pulse bg-slate-200 w-20 h-3"></div>
+            </td>
+            <td>
+              <div className="animate-pulse bg-slate-200 w-20 h-3"></div>
+            </td>
+            <td>
+              <div className="animate-pulse bg-slate-200 w-20 h-3"></div>
+            </td>
+            <td>
+              <div className="animate-pulse bg-slate-200 w-20 h-3"></div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
