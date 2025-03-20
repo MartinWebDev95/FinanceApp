@@ -17,7 +17,7 @@ const Pot = ({ id, name, total, target, theme }) => {
 
   return (
     <>
-      <div className="bg-white rounded-md p-4 shadow-lg">
+      <li className="bg-white rounded-md p-4 shadow-lg">
         <div className="flex items-center justify-between relative">
           <h2 className="flex items-center gap-2.5">
             <span className="w-4 h-4 rounded-full" style={{ backgroundColor: theme }}></span>
@@ -58,7 +58,7 @@ const Pot = ({ id, name, total, target, theme }) => {
 
           <BtnWithdraw setIsOpened={setIsOpenedWithdrawModal} />
         </div>
-      </div>
+      </li>
 
       {isOpenedAddMoneyModal && (
         <AddMoneyModal 
