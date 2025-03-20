@@ -160,3 +160,43 @@ export const TransactionsTableSkeleton = () => {
     </table>
   )
 }
+
+export const PotSkeleton = () => {
+  return (
+    <div className="grid grid-cols-auto-fill gap-4 mt-8">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="bg-white rounded-md p-4 shadow-lg">
+          <div className="flex items-center justify-between relative">
+            <div className="flex items-center gap-2.5">
+              <div className="w-5 h-5 rounded-full animate-pulse bg-slate-200"></div>
+              <div className="w-24 h-4 animate-pulse bg-slate-200"></div> 
+            </div>
+
+            <div className="w-1 h-5 animate-pulse bg-slate-200"></div>
+          </div>
+
+          <div className="mt-8">
+            <div className="w-full flex items-center justify-between">
+              <div className="animate-pulse w-16 h-3 bg-slate-200"></div> 
+              <div className="animate-pulse w-16 h-4 bg-slate-200"></div>
+            </div>
+
+            <div className="w-full h-3 bg-slate-200 rounded-full mt-2 animate-pulse">
+              <div className="w-24 h-3 rounded-full bg-slate-300 animate-pulse" /> 
+            </div>
+
+            <div className="w-full flex items-center justify-between mt-1">
+              <div className="w-12 h-2 bg-slate-200 animate-pulse"></div>
+              <div className="w-20 h-2 bg-slate-200 animate-pulse"></div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <div className="w-full h-12 bg-slate-200 animate-pulse rounded-md"></div>
+            <div className="w-full h-12 bg-slate-200 animate-pulse rounded-md"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
