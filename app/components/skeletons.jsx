@@ -200,3 +200,71 @@ export const PotSkeleton = () => {
     </div>
   )
 }
+
+export const RecurringBillsTableSkeleton = () => {
+  return (
+    <table className="w-full table-auto bg-white">
+      <thead className="text-left">
+        <tr>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+          <th>
+            <div className="animate-pulse bg-slate-200 w-16 h-3 mb-2"></div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {[...Array(10)].map((_, i) => (
+          <tr key={i} className="border-t border-gray-200 w-full">
+            <td className="flex items-center gap-4 py-4">
+              <div className="animate-pulse bg-slate-200 w-9 h-9 rounded-full"></div>
+              <div className="animate-pulse bg-slate-200 w-20 h-3"></div>
+            </td>
+            <td>
+              <div className="animate-pulse bg-slate-200 w-16 h-3"></div>
+            </td>
+            <td>
+              <div className="animate-pulse bg-slate-200 w-14 h-3"></div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+export const SummarySkeleton = () => {
+  return (
+    <div className="w-full lg:w-1/4 flex flex-col md:flex-row lg:flex-col md:gap-4">
+      <div className="p-4 rounded-md shadow-lg mb-4 md:mb-0 w-full min-h-full flex flex-col justify-center bg-white">
+        <div className="w-5 h-5 animate-pulse bg-slate-200"></div>
+
+        <div>
+          <div className="mt-4 mb-2 animate-pulse bg-slate-200 w-16 h-3"></div>
+          <div className="animate-pulse bg-slate-200 w-28 h-6"></div>
+        </div>
+      </div>
+
+      <div className="bg-white p-4 rounded-md shadow-lg text-xs w-full h-full">
+        <div className="mb-4 animate-pulse w-20 h-4 bg-slate-200"></div>
+        <div className="pb-4 w-full border-b border-gray-200 flex items-center justify-between">
+          <div className="animate-pulse w-16 h-2 bg-slate-200"></div>
+          <div className="animate-pulse w-14 h-2 bg-slate-200"></div>
+        </div>
+        <div className="py-4 w-full border-b border-gray-200 flex items-center justify-between">
+          <div className="animate-pulse w-16 h-2 bg-slate-200"></div>
+          <div className="animate-pulse w-14 h-2 bg-slate-200"></div>
+        </div>
+        <div className="pt-4 w-full flex items-center justify-between">
+          <div className="animate-pulse w-16 h-2 bg-slate-200"></div>
+          <div className="animate-pulse w-14 h-2 bg-slate-200"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
