@@ -1,9 +1,11 @@
 import Filter from "@/app/components/Filter";
 import { BtnAddNewTransaction } from "@/app/components/pots/buttons";
 import Search from "@/app/components/Search";
+import { TransactionsTableSkeleton } from "@/app/components/skeletons";
 import Table from "@/app/components/transactions/Table";
 import { fetchCategories } from "@/app/lib/data";
 import { sortBy } from "@/app/lib/utils";
+import { Suspense } from "react";
 
 export default async function TransactionsPage({ searchParams }){
 
@@ -39,7 +41,9 @@ export default async function TransactionsPage({ searchParams }){
           </div>
         </div>
 
-        <Table query={query} />
+        <Suspense fallback={<TransactionsTableSkeleton />}>
+          <Table query={query} />
+        </Suspense>
       </div>
     </>
   )
