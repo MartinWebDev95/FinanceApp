@@ -1,15 +1,16 @@
 import { LogoutIcon } from "../lib/utils";
-import Cards from "../components/overview/Cards";
-import Grid from "../components/overview/Grid";
 import { signOut } from "@/auth";
-import { fetchFinancesData } from "../lib/data";
+import PotsSummary from "../components/overview/PotsSummary";
+import LatestTransactions from "../components/overview/LatestTransactions";
+import BudgetsChart from "../components/overview/BudgetsChart";
+import RecurringBillsSummary from "../components/overview/RecurringBillsSummary";
+import { Suspense } from "react";
+import { BudgetsChartSkeleton, CardsWrapperSkeleton, LatestTransactionsSkeleton, PotsSummarySkeleton, RecurringBillsSummarySkeleton } from "../components/skeletons";
+import CardsWrapper from "../components/overview/CardsWrapper";
 
 export default async function OverviewPage(){
-  
-  const { currentBalance, income, expenses } = await fetchFinancesData();
-
   return (
-      <>
+    <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Overview</h1>
         <form 
@@ -25,14 +26,25 @@ export default async function OverviewPage(){
           </button>
         </form>
       </div>
+      
+      <Suspense fallback={<CardsWrapperSkeleton />}>
+        <CardsWrapper />
+      </Suspense>
 
-      <div className="mt-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
-        <Cards title='Current Balance' data={currentBalance.sum} main />
-        <Cards title='Income' data={income.sum} />
-        <Cards title='Expenses' data={Math.abs(expenses.sum).toFixed(2)} />
+      <div className="mt-10 lg:mt-8 columns-1 lg:columns-2 gap-6">
+        <Suspense fallback={<PotsSummarySkeleton />}>
+          <PotsSummary />
+        </Suspense>
+        <Suspense fallback={<BudgetsChartSkeleton />}>
+          <BudgetsChart />
+        </Suspense>
+        <Suspense fallback={<LatestTransactionsSkeleton />}>
+          <LatestTransactions />
+        </Suspense>
+        <Suspense fallback={<RecurringBillsSummarySkeleton />}>
+          <RecurringBillsSummary />
+        </Suspense>
       </div>
-
-      <Grid />
     </>
   )
 }
