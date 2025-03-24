@@ -268,3 +268,88 @@ export const SummarySkeleton = () => {
     </div>
   )
 }
+
+export const BudgetSkeleton = () => {
+  return (
+    <ul className="w-full lg:w-3/5">
+      {[...Array(4)].map((_, i) => (
+        <li key={i} className="bg-white rounded-md shadow-lg p-6 mb-6">
+          <div className="flex items-center justify-between relative">
+            <div className="flex items-center gap-2.5">
+              <div className="animate-pulse bg-slate-200 w-4 h-4 rounded-full"></div>
+              
+              <div className="animate-pulse bg-slate-200 w-32 h-4"></div> 
+            </div>
+    
+            <div className="animate-pulse bg-slate-200 w-1 h-5"></div>
+          </div>
+
+          <div className="animate-pulse bg-slate-200 w-20 h-3 mt-5"></div>
+          
+          {/* Custom Progress Bar */}
+          <div className="animate-pulse w-full h-3 bg-slate-200 rounded-full mt-2">
+            <div className="animate-pulse bg-slate-300 w-28 h-3 rounded-full" /> 
+          </div>
+    
+          <div className="flex items-center justify-between mt-4">
+            <div className="relative">
+              <div className="animate-pulse bg-slate-200 absolute left-0 top-0 h-full w-1 rounded-full" />
+              <div className="ml-3 animate-pulse bg-slate-200 w-10 h-2 mb-1"></div>
+              <div className="ml-3 animate-pulse bg-slate-200 w-14 h-3"></div>
+            </div>
+            
+            <div className="relative">
+            <div className="animate-pulse bg-slate-200 absolute left-0 top-0 h-full w-1 rounded-full" />
+              <div className="ml-3 animate-pulse bg-slate-200 w-10 h-2 mb-1"></div>
+              <div className="ml-3 animate-pulse bg-slate-200 w-14 h-3"></div>
+            </div>
+          </div>
+
+          <div className="animate-pulse bg-slate-200 p-4 mt-4 rounded-md">
+            <div className="w-full flex items-center justify-between">
+              <div className="animate-pulse bg-slate-300 w-28 h-4"></div>
+              
+              <div className="animate-pulse bg-slate-300 w-16 h-3"></div>
+            </div>
+
+            <ul className="mt-2">
+              {[...Array(3)].map((_, i) => (
+                <li key={i} className="flex items-center justify-between border-b border-neutral-300 py-2">
+                  <div className="flex items-center gap-2">
+                    <div className="animate-pulse bg-slate-300 rounded-full w-9 h-9" />
+                    <div className="animate-pulse bg-slate-300 w-28 h-4"></div>
+                  </div>
+
+                  <div className="text-right">
+                    <div className="animate-pulse bg-slate-300 w-14 h-3 mb-1"></div>
+                    <div className="animate-pulse bg-slate-300 w-16 h-2"></div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export const BudgetSummarySkeleton = () => {
+  return (
+    <div className="w-full lg:w-2/5 bg-white rounded-md shadow-lg p-4">
+      <div className="animate-pulse bg-slate-200 w-32 h-4"></div>
+      <ul className="mt-4">
+        {[...Array(4)].map((_, i) => (
+          <li key={i} className="py-4 border-b relative">
+            <div className="absolute top-2 bottom-2 left-0 w-2 rounded-full bg-slate-200 animate-pulse" />
+
+            <div className="flex items-center justify-between pl-4">
+              <div className="animate-pulse bg-slate-200 w-16 h-3"></div>
+              <div className="animate-pulse bg-slate-200 w-24 h-3"></div>               
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
