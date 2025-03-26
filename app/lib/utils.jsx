@@ -161,6 +161,22 @@ export function ExclamationIcon() {
   );
 }
 
+export function ArrowRightIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" strokeWidth="2" className='stroke-white'>
+      <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"></path> 
+    </svg> 
+  )
+}
+
+export function ArrowLeftIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" strokeWidth="2" className='rotate-180 stroke-white'>
+      <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"></path> 
+    </svg> 
+  )
+}
+
 // Themes for CustomSelect
 export const themes = [
   { label: 'Green', value: '#1bf526' },
@@ -221,7 +237,7 @@ export const categories = [
 ];
 
 // Function that return the default filter when there is no filter
-export function getDefaultFilter({ type }){
+export function getDefaultFilter({ type }) {
   switch(type){
     case 'sort':
       return { label: 'Latest', value: 'latest' };
@@ -233,7 +249,7 @@ export function getDefaultFilter({ type }){
 }
 
 // Function to format the recurring bills date
-export function recurringBillsDateFormatter({ date }){
+export function recurringBillsDateFormatter({ date }) {
   const billDate = new Date(date);
   const today = new Date(Date.now());
 
@@ -269,4 +285,34 @@ export function recurringBillsDateFormatter({ date }){
   }
 
   return { formattedDate, icon, color };
+}
+
+// Generate pagination
+export function generatePagination({ numberOfPages, currentPage }) {
+
+  /* Show all pages if there are less than eight pages */
+  if (numberOfPages <= 7) {
+    return [...Array(numberOfPages)].map((_, i) => i+1);    
+  }
+
+  /* If there are more than seven pages and the currently selected page is among the first three pages show this one */
+  if (currentPage <= 3) {
+    return [1, 2, 3, '...', numberOfPages - 1, numberOfPages];
+  }
+
+  /* If there are more than seven pages and the currently selected page is among the last three pages show this one */
+  if (currentPage >= (numberOfPages - 2)){
+    return [1, 2, '...', numberOfPages - 2, numberOfPages - 1, numberOfPages];    
+  }
+  
+  /* If there are more than seven pages and the currently selected page is neither among the first three nor among the last three show this one */
+  return [
+    1, 
+    '...', 
+    currentPage - 1, 
+    currentPage, 
+    currentPage + 1, 
+    '...', 
+    numberOfPages
+  ];
 }
