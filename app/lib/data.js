@@ -53,7 +53,7 @@ export async function fetchTransactions({ limit = 0, query = '' } = {}) {
     
     let offset;
 
-    if(query?.page){
+    if(query?.page && query?.page > 0){
       offset = (parseInt(query.page) - 1) * ITEMS_PER_PAGE;
     } else {
       offset = 0;
