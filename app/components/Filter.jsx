@@ -41,6 +41,11 @@ const Filter = ({ options, type }) => {
 
   const handleClick = ({ option }) => {
     const params = new URLSearchParams(searchParams);
+
+    /* Go back to the first page when the user apply the category filter */
+    if(type === 'category'){
+      params.set('page', 1);
+    }
     
     if(option.value !== 'all' && option.value !== 'latest') {
       params.set(type, option.value);
