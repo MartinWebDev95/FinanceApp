@@ -46,9 +46,18 @@ export async function fetchCategories() {
   }
 }
 
+const ITEMS_PER_PAGE = 6;
 export async function fetchTransactions({ limit = 0, query = '' } = {}) {
   try {
     const { user } = await auth();
+    
+    let offset;
+
+    if(query?.page){
+      offset = (parseInt(query.page) - 1) * ITEMS_PER_PAGE;
+    } else {
+      offset = 0;
+    }
     
     let data;
 
@@ -83,12 +92,39 @@ export async function fetchTransactions({ limit = 0, query = '' } = {}) {
           CASE 
             WHEN ${query?.sort} = 'lowest' THEN t.amount END,
           t.created_at DESC
+        LIMIT ${ITEMS_PER_PAGE}
+        OFFSET ${offset}
       `;
     }
 
     return data.rows;
   } catch (error) {
     throw new Error('Failed to fetch transactions.');
+  }
+}
+
+export async function fetchTransactionsPages({ query }) {
+  try {
+    const { user } = await auth();
+
+    const data = await sql`
+      SELECT COUNT(*)
+      FROM transactions AS t 
+      INNER JOIN categories AS c ON t.category_id = c.id
+      WHERE t.user_id = ${user.id}
+      AND c.value = COALESCE(NULLIF(${query?.category}, ''), c.value)
+      AND (
+        t.name ILIKE ${`%${query?.search ?? ''}%`} 
+        OR t.date::TEXT ILIKE ${`%${query?.search ?? ''}%`}
+        OR t.amount::TEXT ILIKE ${`%${query?.search ?? ''}%`}
+      )
+    `;
+
+    const totalPages = Math.ceil(data.rows[0].count / ITEMS_PER_PAGE);
+
+    return totalPages;
+  } catch (error) {
+    throw new Error('Failed to fetch the number of transactions');
   }
 }
 
