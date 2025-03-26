@@ -2,8 +2,9 @@ import Filter from "@/app/components/Filter";
 import { BtnAddNewTransaction } from "@/app/components/pots/buttons";
 import Search from "@/app/components/Search";
 import { TransactionsTableSkeleton } from "@/app/components/skeletons";
+import ListOfPages from "@/app/components/transactions/ListOfPages";
 import Table from "@/app/components/transactions/Table";
-import { fetchCategories } from "@/app/lib/data";
+import { fetchCategories, fetchTransactionsPages } from "@/app/lib/data";
 import { sortBy } from "@/app/lib/utils";
 import { Suspense } from "react";
 
@@ -11,13 +12,13 @@ export default async function TransactionsPage({ searchParams }){
 
   const query = await searchParams;
 
-  const categories = await fetchCategories();
+  const data = await Promise.all([fetchCategories(), fetchTransactionsPages({ query })])
 
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Transactions</h1>
-        <BtnAddNewTransaction categories={categories} />
+        <BtnAddNewTransaction categories={data[0]} />
       </div>
 
       <div className="mt-8 w-full bg-white p-8 rounded-md shadow-lg">
@@ -36,7 +37,7 @@ export default async function TransactionsPage({ searchParams }){
               <p className="hidden md:block text-gray-500 text-sm whitespace-nowrap">
                 Filter by Category
               </p>
-              <Filter options={categories} type="category" />
+              <Filter options={data[0]} type="category" />
             </div>
           </div>
         </div>
@@ -44,6 +45,8 @@ export default async function TransactionsPage({ searchParams }){
         <Suspense fallback={<TransactionsTableSkeleton />}>
           <Table query={query} />
         </Suspense>
+
+        <ListOfPages numberOfPages={data[1]}/>
       </div>
     </>
   )
