@@ -6,6 +6,8 @@ import { RecurringBillsTableSkeleton, SummarySkeleton } from "@/app/components/s
 import { Suspense } from "react";
 import Summary from "@/app/components/recurring-bills/Summary";
 
+export const dynamic = 'force-dynamic';
+
 export default async function RecurringBillsPage({ searchParams }){
 
   const query = await searchParams;

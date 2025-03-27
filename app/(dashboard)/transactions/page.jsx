@@ -8,6 +8,8 @@ import { fetchCategories, fetchTransactionsPages } from "@/app/lib/data";
 import { sortBy } from "@/app/lib/utils";
 import { Suspense } from "react";
 
+export const dynamic = 'force-dynamic';
+
 export default async function TransactionsPage({ searchParams }){
 
   const query = await searchParams;

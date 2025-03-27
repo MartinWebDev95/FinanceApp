@@ -3,7 +3,9 @@ import ListOfPots from "@/app/components/pots/ListOfPots";
 import { PotSkeleton } from "@/app/components/skeletons";
 import { Suspense } from "react";
 
-export default async function PotsPage(){
+export const dynamic = 'force-dynamic';
+
+export default function PotsPage(){
   return (
     <>
       <div className="flex items-center justify-between">

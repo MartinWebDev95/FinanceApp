@@ -5,6 +5,8 @@ import { BudgetSkeleton, BudgetSummarySkeleton } from "@/app/components/skeleton
 import { fetchBudgets, fetchCategories } from "@/app/lib/data";
 import { Suspense } from "react";
 
+export const dynamic = 'force-dynamic';
+
 export default async function BudgetsPage() {
 
   const data = await Promise.all([fetchBudgets(), fetchCategories()]);

@@ -8,7 +8,9 @@ import { Suspense } from "react";
 import { BudgetsChartSkeleton, CardsWrapperSkeleton, LatestTransactionsSkeleton, PotsSummarySkeleton, RecurringBillsSummarySkeleton } from "../components/skeletons";
 import CardsWrapper from "../components/overview/CardsWrapper";
 
-export default async function OverviewPage(){
+export const dynamic = 'force-dynamic';
+
+export default function OverviewPage(){
   return (
     <>
       <div className="flex items-center justify-between">
