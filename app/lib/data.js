@@ -292,9 +292,9 @@ export async function fetchFinancesData() {
     const data = await Promise.all([currentBalance, income, expenses]);
 
     return ({
-      currentBalance: data[0].rows[0],
-      income: data[1].rows[0],
-      expenses: data[2].rows[0]
+      currentBalance: data[0].rows[0].sum,
+      income: data[1].rows[0].sum,
+      expenses: Math.abs(data[2].rows[0].sum).toFixed(2)
     }); 
     
   } catch (error) {

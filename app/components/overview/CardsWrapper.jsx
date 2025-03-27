@@ -8,9 +8,9 @@ const CardsWrapper = async () => {
   
   return (
     <div className="mt-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
-      <Cards title='Current Balance' data={currentBalance.sum} main />
-      <Cards title='Income' data={income.sum} />
-      <Cards title='Expenses' data={Math.abs(expenses.sum).toFixed(2)} />
+      <Cards title='Current Balance' data={currentBalance} main />
+      <Cards title='Income' data={income} />
+      <Cards title='Expenses' data={expenses} />
     </div>
   )
 }
