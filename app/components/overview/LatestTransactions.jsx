@@ -1,10 +1,16 @@
 import { fetchTransactions } from '@/app/lib/data';
 import { ArrowDetails } from '@/app/lib/utils'
 import Link from 'next/link'
+import EmptyPanel from './EmptyPanel';
 
 const LatestTransactions = async () => {
   
   const transactions = await fetchTransactions({ limit: 4 });
+
+  if(transactions.length === 0) {
+    return <EmptyPanel title="Transactions" href="/transactions" />
+  } 
+    
   
   return (
     <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">

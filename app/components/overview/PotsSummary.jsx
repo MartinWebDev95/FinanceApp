@@ -1,9 +1,14 @@
 import { fetchPots } from '@/app/lib/data';
 import { ArrowDetails, PotsIcon } from '@/app/lib/utils'
 import Link from 'next/link';
+import EmptyPanel from './EmptyPanel';
 
 const PotsSummary = async () => {
   const pots = await fetchPots({ limit: 4 });
+
+  if(pots.length === 0) {
+    return <EmptyPanel title="Pots" href="/pots" />
+  } 
 
   return (
     <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">

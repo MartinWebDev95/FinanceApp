@@ -3,10 +3,15 @@ import PieChart from './PieChart'
 import BudgetsSummary from '../budgets/BudgetsSummary'
 import { fetchBudgets } from '@/app/lib/data'
 import Link from 'next/link'
+import EmptyPanel from './EmptyPanel'
 
 const BudgetsChart = async () => {
   
   const budgets = await fetchBudgets();
+
+  if(budgets.length === 0) {
+    return <EmptyPanel title="Budgets" href="/budgets" />
+  }
   
   return (
     <div className="break-inside-avoid p-6 mb-6 bg-white rounded-md shadow-lg">
