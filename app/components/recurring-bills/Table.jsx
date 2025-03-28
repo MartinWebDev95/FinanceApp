@@ -1,9 +1,12 @@
 import { fetchRecurringBills } from "@/app/lib/data";
 import { recurringBillsDateFormatter } from "@/app/lib/utils";
+import EmptyBills from "./EmptyBills";
 
 const Table = async ({ query }) => {
 
   const recurringBills = await fetchRecurringBills({ query });
+
+  if(recurringBills.length === 0) return <EmptyBills />
 
   return (
     <table className="w-full table-auto">
