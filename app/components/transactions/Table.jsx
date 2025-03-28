@@ -1,8 +1,11 @@
 import { fetchTransactions } from "@/app/lib/data";
+import EmptyTransactions from "./EmptyTransactions";
 
 const Table = async ({ query }) => {
 
   const transactions = await fetchTransactions({ query });
+
+  if(transactions.length === 0) return <EmptyTransactions />
 
   return (
     <table className="w-full table-auto">
