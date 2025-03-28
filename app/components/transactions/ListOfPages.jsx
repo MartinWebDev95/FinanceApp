@@ -44,7 +44,12 @@ const ListOfPages = ({ numberOfPages }) => {
 
       <Link 
         href={createPageURL({ page: parseInt(currentPage) + 1 })}
-        className={`border px-2 py-1.5 rounded-md bg-neutral-900 hover:bg-neutral-800 transition-all ease-in-out duration-200 ${parseInt(currentPage) !== numberOfPages ? 'visible' : 'invisible'}`} 
+        className={`border px-2 py-1.5 rounded-md bg-neutral-900 hover:bg-neutral-800 transition-all ease-in-out duration-200 
+        ${
+          (parseInt(currentPage) !== numberOfPages) && (numberOfPages !== 0) 
+            ? 'visible' 
+            : 'invisible'
+        }`} 
       >
         <ArrowRightIcon />
       </Link>
