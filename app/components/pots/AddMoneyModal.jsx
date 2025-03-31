@@ -1,38 +1,22 @@
+import useModal from "@/app/hooks/useModal";
 import { updateMoneyPot } from "@/app/lib/actions";
 import { calculatePercentage } from "@/app/lib/utils";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 
 const AddMoneyModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
-
-  const [newAmount, setNewAmount] = useState(1);
 
   const initialState = { errors: {} };
 
   const updatePot = updateMoneyPot.bind(null, id, { type: 'add' });
   
-  const [errorMessage, formAction] = useActionState(updatePot, initialState);
+  const [errorMessage, formAction, pending] = useActionState(updatePot, initialState);
 
-  const handleCloseModal = (e) => {
-    if(e.target.ariaModal){
-      setIsOpened(false);
-    }
-
-    return;
-  }
-
-  const handleNewAmount = (e) => {
-    if(Number(e.target.value) < 1){
-      setNewAmount('');
-      return;
-    }
-
-    if(Number(e.target.value) > (target - total)){
-      setNewAmount(target - total);
-      return;
-    }
-
-    setNewAmount(Number(e.target.value));
-  };
+  const { newAmount, handleAddMoney, handleCloseModal } = useModal({ 
+    setIsOpened, 
+    isPending: pending, 
+    errorMessage,
+    total 
+  });
 
   return (
     <dialog 
@@ -81,10 +65,10 @@ const AddMoneyModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
                 id="targetAmount" 
                 placeholder="Enter amount" 
                 value={newAmount}
-                onChange={handleNewAmount} 
+                onChange={handleAddMoney} 
               />
 
-              {errorMessage.errors?.targetAmount && (
+              {errorMessage?.errors?.targetAmount && (
                 errorMessage.errors.targetAmount.map((msg, index) => (
                   <p key={index} className="text-red-500 text-sm">{msg}</p>
                 ))
@@ -93,7 +77,11 @@ const AddMoneyModal = ({ isOpened, setIsOpened, id, name, total, target }) => {
           </div>
         </fieldset>
 
-        <button type="submit" className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200">
+        <button 
+          type="submit" 
+          aria-disabled={pending}
+          className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 aria-disabled:cursor-not-allowed aria-disabled:opacity-70"
+        >
           Confirm Addition
         </button>
       </form>

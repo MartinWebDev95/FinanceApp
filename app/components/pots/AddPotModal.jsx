@@ -2,6 +2,7 @@ import { themes } from "@/app/lib/utils";
 import CustomSelect from "./CustomSelect";
 import { useActionState } from "react";
 import { createNewPot, editPot } from "@/app/lib/actions";
+import useModal from "@/app/hooks/useModal";
 
 const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = false }) => {
 
@@ -9,15 +10,9 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
   
   const updatePot = editPot.bind(null, id);
 
-  const [errorMessage, formAction] = useActionState(edit ? updatePot : createNewPot, initialState);
+  const [errorMessage, formAction, pending] = useActionState(edit ? updatePot : createNewPot, initialState);
 
-  const handleCloseModal = (e) => {
-    if(e.target.ariaModal){
-      setIsOpened(false);
-    }
-
-    return;
-  }
+  const { handleCloseModal } = useModal({ setIsOpened, isPending: pending, errorMessage })
 
   return (
     <dialog 
@@ -51,7 +46,7 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               placeholder="e.g. Rainy Days" 
             />
 
-            {errorMessage.errors?.potName && (
+            {errorMessage?.errors?.potName && (
               errorMessage.errors.potName.map((msg, index) => (
                 <p key={index} className="text-red-500 text-sm">{msg}</p>
               ))
@@ -69,7 +64,7 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               placeholder="$ e.g. 2000" 
             />
 
-            {errorMessage.errors?.targetAmount && (
+            {errorMessage?.errors?.targetAmount && (
               errorMessage.errors.targetAmount.map((msg, index) => (
                 <p key={index} className="text-red-500 text-sm">{msg}</p>
               ))
@@ -85,7 +80,7 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
               name="theme"
             />
 
-            {errorMessage.errors?.theme && (
+            {errorMessage?.errors?.theme && (
               errorMessage.errors.theme.map((msg, index) => (
                 <p key={index} className="text-red-500 text-sm">{msg}</p>
               ))
@@ -95,7 +90,8 @@ const AddPotModal = ({ isOpened, setIsOpened, id, name, target, theme, edit = fa
 
         <button 
           type="submit" 
-          className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200"
+          aria-disabled={pending}
+          className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 aria-disabled:cursor-not-allowed aria-disabled:opacity-70"
         >
           { edit ? 'Save Changes' : 'Add New Pot' }
         </button>
