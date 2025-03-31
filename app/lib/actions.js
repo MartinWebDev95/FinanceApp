@@ -136,7 +136,6 @@ export async function createNewPot(prevState, formData) {
   }
 
   revalidatePath('/pots');
-  redirect('/pots');
 }
 
 export async function editPot(id, prevState, formData){
@@ -166,7 +165,6 @@ export async function editPot(id, prevState, formData){
   }
 
   revalidatePath('/pots');
-  redirect('/pots');
 }
 
 export async function updateMoneyPot(id, type, prevState, formData) {
@@ -201,7 +199,6 @@ export async function updateMoneyPot(id, type, prevState, formData) {
   }
 
   revalidatePath('/pots');
-  redirect('/pots');
 }
 
 export async function deletePot(id) {
@@ -217,7 +214,6 @@ export async function deletePot(id) {
   }
 
   revalidatePath('/pots');
-  redirect('/pots');
 }
 
 export async function createNewTransaction(prevState, formData) {
@@ -260,7 +256,6 @@ export async function createNewTransaction(prevState, formData) {
   }
 
   revalidatePath('/transactions');
-  redirect('/transactions');
 }
 
 export async function createNewBudget(prevState, formData) {
@@ -299,7 +294,6 @@ export async function createNewBudget(prevState, formData) {
   }
 
   revalidatePath('/budgets');
-  redirect('/budgets');
 }
 
 export async function editBudget(id, prevState, formData) {
@@ -340,7 +334,6 @@ export async function editBudget(id, prevState, formData) {
   }
 
   revalidatePath('/budgets');
-  redirect('/budgets');
 }
 
 export async function deleteBudget(id) {
@@ -356,5 +349,4 @@ export async function deleteBudget(id) {
   }
 
   revalidatePath('/budgets');
-  redirect('/budgets');
 }
