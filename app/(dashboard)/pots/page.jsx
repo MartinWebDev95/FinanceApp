@@ -5,6 +5,10 @@ import { Suspense } from "react";
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+  title: 'Finance App | Pots',
+};
+
 export default function PotsPage(){
   return (
     <>

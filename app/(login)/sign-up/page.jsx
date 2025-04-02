@@ -4,6 +4,10 @@ import { createUser } from "@/app/lib/actions";
 import Link from "next/link";
 import { useActionState } from "react";
 
+export const metadata = {
+  title: 'Finance App | Sign Up',
+};
+
 export default function SignUpPage(){
 
   const [errorMessage, formAction, isPending] = useActionState(createUser, undefined);

@@ -10,6 +10,10 @@ import { Suspense } from "react";
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+  title: 'Finance App | Transactions',
+};
+
 export default async function TransactionsPage({ searchParams }){
 
   const query = await searchParams;

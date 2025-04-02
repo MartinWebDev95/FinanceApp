@@ -8,6 +8,10 @@ import Summary from "@/app/components/recurring-bills/Summary";
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+  title: 'Finance App | Recurring Bills',
+};
+
 export default async function RecurringBillsPage({ searchParams }){
 
   const query = await searchParams;

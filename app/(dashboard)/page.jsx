@@ -10,6 +10,10 @@ import CardsWrapper from "../components/overview/CardsWrapper";
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+  title: 'Finance App | Overview',
+};
+
 export default function OverviewPage(){
   return (
     <>
