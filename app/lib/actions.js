@@ -21,6 +21,25 @@ const LoginFormSchema = z.object({
   })
 });
 
+const SignUpFormSchema = z.object({
+  username: z.string({
+    required_error: "Name is required",
+    invalid_type_error: "Name cant' be a number",
+  }).min(1, {
+    message: 'Name must be at least 1 character long.',
+  }).trim(),
+  email: z.string({
+    required_error: "Email is required",
+  }).email({
+    message: 'Invalid email address'
+  }),
+  password: z.string({
+    required_error: "Password is required",
+  }).min(8, {
+    message: 'Password must be at least 8 character long'
+  })
+});
+
 const PotFormSchema = z.object({
   potName: z.string({
     required_error: "Pot name is required",
@@ -106,7 +125,6 @@ export async function login(prevState, formData) {
     // Compare the password with the hashed password from the database
     const passwordsMatch = await bcrypt.compare(password, user.password);
 
-    // If the passwords match, return the user
     if (!passwordsMatch){
       return {
         errors: { password: ['The password does not exist'] },
@@ -127,21 +145,35 @@ export async function login(prevState, formData) {
 }
 
 export async function createUser(prevState, formData) {
-  const rawFormData = {
+  const validationData = SignUpFormSchema.safeParse({
     username: formData.get('username'),
     email: formData.get('email'),
     password: formData.get('password'),
-  };
+  });
 
-  const { username, email, password } = rawFormData;
+  if(!validationData.success) {
+    return {
+      errors: validationData.error.flatten().fieldErrors,
+    }
+  }
+
+  const { username, email, password } = validationData.data;
 
   // Hash the password
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
+    // Check if the email already exist in the database
+    const user = await getUser(email);
+
+    if(user) {
+      return {
+        errors: { email: ['There are already an account with this email'] },
+      }        
+    }
+
     await sql`INSERT INTO users (name, email, password) VALUES (${username}, ${email}, ${passwordHash})`;
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to create user.');
   }
 
