@@ -18,32 +18,68 @@ const LoginForm = () => {
 
         <div className="mb-3">
           <label htmlFor="email">Email</label>
-          <input className="border border-gray-400 rounded-md block mt-1 py-0.5 px-2 w-full" type="email" name="email" id="email" />
+          <input 
+            type="email" 
+            name="email" 
+            id="email" 
+            className="border border-gray-400 rounded-md block mt-1 py-0.5 px-2 w-full" 
+          />
+          {
+            errorMessage?.errors?.email && (
+              errorMessage.errors.email.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )
+          }
         </div>
 
         <div>
           <label htmlFor="password">Password</label>
-          <input className="border border-gray-400 rounded-md block mt-1 py-0.5 px-2 w-full" type="password" name="password" id="password" />
+          <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            className="border border-gray-400 rounded-md block mt-1 py-0.5 px-2 w-full" 
+          />
+          {
+            errorMessage?.errors?.password && (
+              errorMessage.errors.password.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )
+          }
         </div>
       </fieldset>
 
       <input type="hidden" name="redirectTo" value={callbackUrl} />
 
-      <button type="submit" className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200" disabled={isPending}>
+      <button 
+        type="submit" 
+        aria-disabled={isPending}
+        className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 aria-disabled:cursor-not-allowed aria-disabled:opacity-70" 
+      >
         Login
       </button>
 
       <p className="w-full mt-4 flex justify-center gap-2">
         You don't have an account yet? 
-        <Link href="/sign-up" className="text-neutral-900 font-bold hover:underline">Sign up</Link>
+        <Link href="/sign-up" className="text-neutral-900 font-bold hover:underline">
+          Sign up
+        </Link>
       </p>
 
       <div className="w-full mt-4 text-sm">
         <p className="text-neutral-900 text-center font-bold mb-1">Demo user</p>
         <div className="flex flex-col items-center">
           <div>
-            <p><span className="text-neutral-900 font-bold">Email:</span> demo@finance.com</p>
-            <p><span className="text-neutral-900 font-bold">Password:</span> finance12345</p>
+            <p>
+              <span className="text-neutral-900 font-bold">Email: </span> 
+              demo@finance.com
+            </p>
+            <p>
+              <span className="text-neutral-900 font-bold">Password: </span> 
+              finance12345
+            </p>
           </div>
         </div>
       </div>
