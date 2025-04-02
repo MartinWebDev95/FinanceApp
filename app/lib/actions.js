@@ -6,6 +6,20 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { getUser } from "./data";
+
+const LoginFormSchema = z.object({
+  email: z.string({
+    required_error: "Email is required",
+  }).email({
+    message: 'Invalid email address'
+  }),
+  password: z.string({
+    required_error: "Password is required",
+  }).min(8, {
+    message: 'Password must be at least 8 character long'
+  })
+});
 
 const PotFormSchema = z.object({
   potName: z.string({
@@ -67,16 +81,42 @@ const BudgetFormSchema = z.object({
 });
 
 export async function login(prevState, formData) {
+  const validationData = LoginFormSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  })
+          
+  if(!validationData.success) {
+    return {
+      errors: validationData.error.flatten().fieldErrors,
+    };
+  }
+
+  const { email, password } = validationData.data;
+
   try {
+    const user = await getUser(email);
+    
+    if(!user){
+      return {
+        errors: { email: ['The email does not exist'] },
+      };
+    }
+
+    // Compare the password with the hashed password from the database
+    const passwordsMatch = await bcrypt.compare(password, user.password);
+
+    // If the passwords match, return the user
+    if (!passwordsMatch){
+      return {
+        errors: { password: ['The password does not exist'] },
+      };
+    }
+
     await signIn('credentials', formData);
   } catch (error) {
-    if (error) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
-        default:
-          return 'Something went wrong.';
-      }
+    if(error) {
+      return 'Someting went wrong';
     }
 
     throw error;
