@@ -1,4 +1,5 @@
 import { PT_Sans } from 'next/font/google';
+import { z } from 'zod';
 
 //Icons
 export function HomeIcon() {
@@ -316,3 +317,95 @@ export function generatePagination({ numberOfPages, currentPage }) {
     numberOfPages
   ];
 }
+
+// Zod Schemas
+export const LoginFormSchema = z.object({
+  email: z.string({
+    required_error: "Email is required",
+  }).email({
+    message: 'Invalid email address'
+  }),
+  password: z.string({
+    required_error: "Password is required",
+  }).min(8, {
+    message: 'Password must be at least 8 character long'
+  })
+});
+
+export const SignUpFormSchema = z.object({
+  username: z.string({
+    required_error: "Name is required",
+    invalid_type_error: "Name cant' be a number",
+  }).min(1, {
+    message: 'Name must be at least 1 character long.',
+  }).trim(),
+  email: z.string({
+    required_error: "Email is required",
+  }).email({
+    message: 'Invalid email address'
+  }),
+  password: z.string({
+    required_error: "Password is required",
+  }).min(8, {
+    message: 'Password must be at least 8 character long'
+  })
+});
+
+export const PotFormSchema = z.object({
+  potName: z.string({
+    required_error: "Pot name is required",
+    invalid_type_error: "Pot name can't be a number",
+  }).min(1, {
+    message: 'Pot name must be at least 1 character long.',
+  }).trim(),
+  targetAmount: z.preprocess(val => parseInt(val), z.number({
+    required_error: 'Target amount is required.',
+    invalid_type_error: 'Target amount must be a number.',
+  })),
+  theme: z.string({
+    required_error: "Theme is required",
+  }).min(1, {
+    message: 'Please select a theme.',
+  }),
+})
+
+export const UpdateMoneyPotFormSchema = PotFormSchema.omit({ potName: true, theme: true });
+
+export const TransactionFormSchema = z.object({
+  transactionName: z.string({
+    required_error: "Transaction name is required",
+    invalid_type_error: "Transaction name can't be a number",
+  }).min(1, {
+    message: 'Transaction name must be at least 1 character long.',
+  }).trim(),
+  transactionDate: z.string().date({
+    invalid_type_error: 'Please enter a valid date.',
+  }),
+  transactionAmount: z.preprocess(val => parseInt(val), z.number({
+    required_error: 'Transaction amount is required.',
+    invalid_type_error: 'Transaction amount must be a number.',
+  })),
+  transactionCategory: z.string({
+    required_error: 'Transaction category is required.',
+  }).min(1, {
+    message: 'Please select a category.',
+  }),
+  transactionRecurring: z.coerce.boolean(),
+});
+
+export const BudgetFormSchema = z.object({
+  budgetCategory: z.string({
+    required_error: 'Budget category is required.',
+  }).min(1, {
+    message: 'Please select a category.',
+  }),
+  budgetMaximumAmount: z.preprocess(val => parseInt(val), z.number({
+    required_error: 'The amount is required.',
+    invalid_type_error: 'The amount must be a number.',
+  })),
+  budgetTheme: z.string({
+    required_error: 'Theme is required.',
+  }).min(1, {
+    message: 'Please select a theme.',
+  }),
+});
