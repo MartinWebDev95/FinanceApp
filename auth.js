@@ -2,14 +2,27 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { getUser } from './app/lib/data';
+import bcrypt from "bcryptjs";
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     Credentials({
       async authorize(credentials) {
-        const user = await getUser(credentials.email);
-        return user;
+        const { email, password } = credentials;
+        
+        const user = await getUser(email);
+        
+        if (!user) return null;
+        
+        const passwordsMatch = await bcrypt.compare(password, user.password);
+        
+        if (!passwordsMatch) return null;
+
+        return user;        
       }
     }),
   ],
@@ -29,5 +42,5 @@ export const { auth, signIn, signOut } = NextAuth({
 
       return session;
     }
-  }
+  },
 });
