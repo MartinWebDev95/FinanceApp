@@ -5,21 +5,21 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const restrictedRoutes = ["/", "/pots", "/transactions", "/budgets"]; // Protected routes
-      const isRestrictedRoute =
-        restrictedRoutes.includes(nextUrl.pathname) ||
-        restrictedRoutes.some(route => nextUrl.pathname.startsWith(route + "/"));
+      const { pathname } = nextUrl;
 
-      if (isRestrictedRoute && !isLoggedIn) {
-        return Response.redirect(new URL("/login", nextUrl)); // Redirect to login if not authenticated
-      }
+      // Any path different from login/signup is protected
+      const isOnProtected = !(pathname.startsWith('/login') || pathname.startsWith('/sign-up'));
 
-      if (isLoggedIn && (nextUrl.pathname === "/login" || nextUrl.pathname === "/sign-up")) {
-        return Response.redirect(new URL("/", nextUrl)); // Redirect to dashboard if authenticated
+      // Redirect from login/signup to home if logged in
+      if(isOnProtected) {
+        if(isLoggedIn) return true;
+        return false;
+      } else if(isLoggedIn) {
+        return Response.redirect(new URL('/', nextUrl))
       }
 
       return true;
     },
   },
-  providers: [], // Add authentication providers here
+  providers: [],
 };
