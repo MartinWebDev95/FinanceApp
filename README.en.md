@@ -1,4 +1,4 @@
-[Button Language]: https://img.shields.io/badge/Read%20In%20English-000000?style=for-the-badge
+[Button Language]: https://img.shields.io/badge/Leer%20En%20Español-000000?style=for-the-badge
 
 [![Button Language]](https://github.com/MartinWebDev95/FinanceApp/blob/master/README.en.md)
 
@@ -7,11 +7,11 @@
 
 [Finance App]: https://img.shields.io/badge/Finance%20App-000000?style=for-the-badge
 
-Proyecto que consiste en una aplicación web de finanzas, donde puedes ver el estado de tus cuentas, tus gastos y tus ingresos.
+Project that consist in a web app for finances, where you can see the status of your accounts, your expenses and your income.
 
 [![Finance App]](https://finance-app-nine-virid.vercel.app/)
 
-## 👨🏽‍💻 ¿Qué tecnologías he utilizado?
+## 👨🏽‍💻 What technologies have I used?
 ---
 
 [Button Vercel]: https://img.shields.io/badge/Deploy%20on%20Vercel-000000?style=for-the-badge&logo=vercel
@@ -23,22 +23,22 @@ Proyecto que consiste en una aplicación web de finanzas, donde puedes ver el es
 
 [![Button Next]](https://nextjs.org/)
 [![Button Tailwind]](https://tailwindcss.com/docs/installation)
-[![Button PostgreSQL]](https://vercel.com/)
+[![Button PostgreSQL]](https://www.postgresql.org/)
 [![Button Zod]](https://zod.dev/)
 [![Button Highcharts]](https://www.highcharts.com/)
 [![Button Vercel]](https://vercel.com/)
 
-- **Next JS:** He utilizado Next.js como framework para el desarrollo de la aplicación, lo que me ha permitido crear una aplicación web rápida y escalable.
+- **Next JS:** I have used Next.js as a framework for the development of the application, which has allowed me to create a fast and scalable web application.
 
-- **Tailwind CSS:** He usado TailwindCSS para darle estilos a los diferentes componentes.
+- **Tailwind CSS:** I have used TailwindCSS to style the different components.
 
-- **PostgreSQL:** He utilizado PostgreSQL como base de datos para almacenar la información de los usuarios y todas sus cuentas.
+- **PostgreSQL:** I have used PostgreSQL as a database to store user information and all their accounts.
 
-- **Zod:** He utilizado Zod para validar los datos que se envían a la base de datos.
+- **Zod:** I have used Zod to validate the data that is sent to the database.
 
-- **Highcharts:** He utilizado Highcharts para crear el gráfico circular que muestra los datos de los budgets.
+- **Highcharts:** I have used Highcharts to create the pie chart that show the budgets data.
 
-## 📸 Algunas capturas del proyecto!
+## 📸 Some Screenshots!
 ---
 
 ![Login Page Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/loginPage.png)
@@ -57,10 +57,10 @@ Proyecto que consiste en una aplicación web de finanzas, donde puedes ver el es
 
 ![Add Trasanction Modal Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/addTransactionModal.png)
 
-## 🗃️ Estructura del proyecto
+## 🗃️ Project Structure
 ---
 
-Esta es la estructura que he utilizado en este proyecto:
+This is the structure that I have used in this project:
 
 ```
 /
@@ -93,9 +93,9 @@ Esta es la estructura que he utilizado en este proyecto:
 └── package.json
 ```
 
-## 👀 ¿Dónde puedes encontrarme?
+## 👀 Where you can find me?
 ---
 
-[Button Portfolio]: https://img.shields.io/badge/Visita%20mi%20Portfolio-000000?style=for-the-badge
+[Button Portfolio]: https://img.shields.io/badge/Visit%20My%20Portfolio-000000?style=for-the-badge
 
-[![Button Portfolio]](https://portfolio-martinwebdev95.vercel.app/)
+[![Button Portfolio]](https://portfolio-martinwebdev95.vercel.app/en)
