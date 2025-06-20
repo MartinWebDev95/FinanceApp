@@ -24,7 +24,7 @@ const AddBudgetModal = ({ isOpened, setIsOpened, budget, categories, edit = fals
       className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
       onClick={handleCloseModal}
     >
-      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-80 sm:w-96 shadow-xl">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             { edit ? 'Edit Budget' : 'Add New Budget' }

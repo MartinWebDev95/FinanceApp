@@ -10,7 +10,7 @@ const LoginForm = () => {
   return (
     <form 
       onSubmit={handleSubmit}
-      className="bg-white text-gray-600 px-10 py-8 rounded-md w-96 shadow-xl"
+      className="bg-white text-gray-600 px-10 py-8 rounded-md w-80 sm:w-96 shadow-xl"
     >
       <fieldset>
         <legend className="mb-4 text-neutral-900 font-bold text-4xl">Login</legend>
