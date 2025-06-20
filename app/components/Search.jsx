@@ -13,6 +13,7 @@ const Search = ({ placeholder }) => {
 
     if(e.target.value){
       params.set('search', e.target.value);
+      params.set('page', '1'); // Reset to first page on new search
     }else{
       params.delete('search');
     }
