@@ -22,12 +22,12 @@ export default async function TransactionsPage({ searchParams }){
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <h1 className="text-3xl font-bold">Transactions</h1>
         <BtnAddNewTransaction categories={data[0]} />
       </div>
 
-      <div className="mt-8 w-full bg-white p-8 rounded-md shadow-lg">
+      <div className="mt-8 w-full bg-white py-8 px-4 sm:px-8 rounded-md shadow-lg">
         <div className="w-full flex flex-row md:flex-col lg:flex-row justify-between items-center pb-8 gap-4">
           <Search placeholder="Search transactions"/>
 
