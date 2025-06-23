@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { LoginFormSchema } from "../lib/utils";
 
 const useSignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
   const router = useRouter();
 
@@ -25,6 +26,9 @@ const useSignIn = () => {
 
     const { email, password } = validationData.data;
     
+    // Set loading state to true to disable the form
+    setIsLoading(true);
+
     /* Call the signIn function from next-auth with the redirect option set to false to handle the 
     redirection manually */
     const result = await signIn('credentials', {
@@ -32,6 +36,8 @@ const useSignIn = () => {
       password,
       redirect: false,
     });
+
+    setIsLoading(false);
 
     if(result?.error) {
       setError({
@@ -45,7 +51,7 @@ const useSignIn = () => {
     router.push('/');
   }
 
-  return { handleSubmit, error }
+  return { isLoading, handleSubmit, error }
 };
 
 export default useSignIn;
