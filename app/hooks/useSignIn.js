@@ -37,18 +37,21 @@ const useSignIn = () => {
       redirect: false,
     });
 
-    setIsLoading(false);
-
+    
     if(result?.error) {
       setError({
         credentialSigning: 'Invalid email or password'
       });
+
+      setIsLoading(false);
       
       return;
     }
 
     // If there are not errors redirect to main page
     router.push('/');
+
+    setIsLoading(false);
   }
 
   return { isLoading, handleSubmit, error }
