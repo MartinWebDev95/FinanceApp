@@ -9,7 +9,7 @@ const SignUpForm = () => {
   const [errorMessage, formAction, isPending] = useActionState(createUser, undefined);
 
   return (
-    <form action={formAction} className="bg-white text-gray-600 px-10 py-8 rounded-md w-96 shadow-xl">
+    <form action={formAction} className="bg-white text-gray-600 px-10 py-8 rounded-md w-80 sm:w-96 shadow-xl">
       <fieldset>
         <legend className="mb-4 text-neutral-900 font-bold text-4xl">Sign Up</legend>
 
@@ -76,7 +76,7 @@ const SignUpForm = () => {
         Sign Up
       </button>
 
-      <p className="w-full mt-4 flex justify-center gap-2">
+      <p className="w-full mt-4 flex justify-center gap-2 text-sm">
         You have already an account? 
         <Link href="/login" className="text-neutral-900 font-bold hover:underline">Login</Link>
       </p>
