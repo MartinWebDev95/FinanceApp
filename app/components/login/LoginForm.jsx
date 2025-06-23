@@ -4,8 +4,8 @@ import useSignIn from "@/app/hooks/useSignIn";
 import Link from "next/link";
 
 const LoginForm = () => {
-  
-  const { handleSubmit, error } = useSignIn();
+
+  const { isLoading, handleSubmit, error } = useSignIn();
 
   return (
     <form 
@@ -58,12 +58,19 @@ const LoginForm = () => {
 
       <button 
         type="submit" 
-        className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200" 
+        className="w-full rounded-md bg-neutral-900 text-white font-bold mt-8 py-2 hover:bg-neutral-800 transition-all ease-in-out duration-200 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-neutral-900" 
+        aria-disabled={isLoading}
       >
-        Login
+        {isLoading ? (
+          <div className="flex justify-center gap-2 w-full py-2">
+            {[...Array(3)].map((_, index) => (
+              <span key={index} className="animate-pulse bg-white w-1 h-1 rounded-full"/>
+            ))}
+          </div>
+          ) : 'Login'}
       </button>
       
-      <p className="w-full mt-4 flex justify-center gap-2">
+      <p className="w-full mt-4 flex justify-center gap-2 text-sm">
         You don't have an account yet? 
         <Link href="/sign-up" className="text-neutral-900 font-bold hover:underline">
           Sign up
