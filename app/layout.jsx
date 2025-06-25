@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scrollbar">
       <body className={`${ptSans.className} antialiased overflow-hidden h-screen bg-slate-200`}>
         {children}
       </body>
