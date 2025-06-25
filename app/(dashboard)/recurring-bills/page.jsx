@@ -25,7 +25,7 @@ export default async function RecurringBillsPage({ searchParams }){
           <Summary />
         </Suspense>
 
-        <div className="w-full lg:w-3/4 h-full bg-white p-8 rounded-md shadow-lg">
+        <div className="w-full lg:w-3/4 h-full bg-white p-4 sm:p-6 md:p-8 rounded-md shadow-lg">
           <div className="w-full flex justify-between items-center pb-8 gap-4">
             <Search placeholder="Search bills"/>
 

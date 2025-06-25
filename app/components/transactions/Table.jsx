@@ -17,7 +17,7 @@ const Table = async ({ query }) => {
           <th className="pb-4">
             Category
           </th>
-          <th className="pb-4">
+          <th className="pb-4 text-center sm:text-left">
             Transaction Date
           </th>
           <th className="pb-4">

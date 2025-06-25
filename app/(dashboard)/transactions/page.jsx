@@ -27,7 +27,7 @@ export default async function TransactionsPage({ searchParams }){
         <BtnAddNewTransaction categories={data[0]} />
       </div>
 
-      <div className="mt-8 w-full bg-white py-8 px-4 sm:px-8 rounded-md shadow-lg">
+      <div className="mt-8 w-full bg-white py-8 px-4 sm:px-6 md:px-8 rounded-md shadow-lg">
         <div className="w-full flex flex-row md:flex-col lg:flex-row justify-between items-center pb-8 gap-4">
           <Search placeholder="Search transactions"/>
 
