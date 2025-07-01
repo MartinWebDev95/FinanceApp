@@ -12,7 +12,7 @@ const Filter = ({ options, type }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter(); 
-
+  
   // Close the custom select when is clicked outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -82,10 +82,10 @@ const Filter = ({ options, type }) => {
 
       {/* All the options */}
       {isOpen && (
-        <ul className="absolute w-40 md:w-full right-0 top-7 md:top-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1">
+        <ul className={`absolute w-40 md:w-full right-0 top-7 md:top-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 ${options.length > 7 ? 'h-56 overflow-y-scroll' : ''}`}>
           {type === 'category' && (            
             <li 
-              className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2"
+              className="p-2 hover:bg-gray-200 flex items-center gap-2"
               onClick={() => handleClick({ option: { label: 'All Transactions', value: 'all' } })}
             >
               All Transactions
@@ -95,7 +95,7 @@ const Filter = ({ options, type }) => {
           {options.map((option) => (
             <li
               key={option.value}
-              className="rounded-lg p-2 hover:bg-gray-200 flex items-center gap-2 "
+              className="p-2 hover:bg-gray-200 flex items-center gap-2"
               onClick={() => handleClick({ option })}
             >
               {option.label}
