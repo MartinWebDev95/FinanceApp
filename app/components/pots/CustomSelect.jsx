@@ -44,11 +44,11 @@ const CustomSelect = ({ data, defaultValue, placeholder, name }) => {
 
       {/* All the options */}
       {isOpen && (
-        <ul className="absolute w-full bottom-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1">
+        <ul className="absolute w-full bottom-10 h-56 overflow-y-scroll bg-white border border-gray-300 rounded-lg shadow-lg mt-1">
           {data.map((option) => (
             <li
               key={option.value}
-              className="rounded-lg py-1 px-2 hover:bg-gray-200 flex items-center gap-2 "
+              className="py-1 px-2 hover:bg-gray-200 flex items-center gap-2"
               onClick={() => {
                 setSelected({ label: option.label, value: option.value });
                 setIsOpen(false);
