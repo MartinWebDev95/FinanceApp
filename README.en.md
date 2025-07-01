@@ -55,7 +55,7 @@ Project that consist in a web app for finances, where you can see the status of 
 
 ![Recurring Bills Page Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/recurringBillsPage.png)
 
-![Add New Transaction Modal Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/addNewTransactionModal.png)
+![Add New Transaction Modal Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/addNewTransaction.png)
 
 ![Add New Pot Screenshot](https://github.com/MartinWebDev95/FinanceApp/blob/master/public/assets/screenshots/addNewPot.png)
 
