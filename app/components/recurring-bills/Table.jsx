@@ -28,7 +28,7 @@ const Table = async ({ query }) => {
         {recurringBills.map(bill => (
           <tr key={bill.id} className="font-bold text-neutral-900 border-t border-gray-200">
             <td className="flex items-center gap-2 py-4 text-xs md:text-base">
-              <img src="./assets/Logo-1.jpg" alt={bill.name} className="w-8 h-8 rounded-full" />
+              <img src={bill.avatar} alt={bill.name} className="w-8 h-8 rounded-full" />
               {bill.name}
             </td>
             <td 
