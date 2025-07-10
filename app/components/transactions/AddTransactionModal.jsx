@@ -1,9 +1,11 @@
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import CustomSelect from "../pots/CustomSelect";
 import { createNewTransaction } from "@/app/lib/actions";
 import useModal from "@/app/hooks/useModal";
 
 const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
+
+  const imagePreview = useRef(null);
 
   const initialState = { errors: {} };
 
@@ -11,18 +13,59 @@ const AddTransactionModal = ({ isOpened, setIsOpened, categories }) => {
   
   const { handleCloseModal } = useModal({ setIsOpened, isPending: pending, errorMessage })
 
+  const updateSelectedImage = (e) => {
+    const curFiles = e.target.files;
+
+    if (curFiles.length > 0) {
+      const file = curFiles[0];
+
+      imagePreview.current.src = URL.createObjectURL(file);
+      imagePreview.current.alt = file.name;
+    }
+  }
+
   return (
     <dialog 
       id="addTransactionDialog" 
       aria-modal 
-      className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10`} 
+      className={`absolute top-0 left-0 w-full h-screen bg-black/70 ${isOpened ? 'grid place-items-center' : 'hidden'} z-10 py-10`} 
       onClick={handleCloseModal}
     >
-      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md w-80 sm:w-96 shadow-xl">
+      <form action={formAction} className="bg-white text-gray-600 p-6 rounded-md h-full -translate-y-6 md:-translate-y-8 lg:translate-y-0 w-80 sm:w-96 shadow-xl overflow-y-scroll">
         <fieldset>
           <legend className="mb-2 text-neutral-900 font-bold text-2xl">
             Add New Transaction
           </legend>
+
+          <div className="mb-3">
+            <div className="flex items-end gap-2">
+              <div>
+                <label htmlFor="transactionAvatar">Avatar</label>
+                <input 
+                  type="file" 
+                  name="transactionAvatar" 
+                  id="transactionAvatar" 
+                  accept="image/png, image/jpeg, image/jpg"
+                  aria-label="Upload an avatar for the transaction"
+                  className="border border-gray-400 rounded-md mt-1 py-1 px-2 w-full" 
+                  onChange={updateSelectedImage}
+                />
+              </div>
+
+              <img 
+                ref={imagePreview} 
+                src="/assets/previewImage.png" 
+                className='w-10 h-10 lg:w-12 lg:h-12 rounded-full' 
+                alt="Preview" 
+              />
+            </div>
+
+            {errorMessage?.errors?.transactionAvatar && (
+              errorMessage.errors.transactionAvatar.map((msg, index) => (
+                <p key={index} className="text-red-500 text-sm">{msg}</p>
+              ))
+            )}
+          </div>
 
           <div className="mb-3">
             <label htmlFor="transactionName">Transaction Name</label>
