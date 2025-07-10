@@ -372,6 +372,15 @@ export const PotFormSchema = z.object({
 export const UpdateMoneyPotFormSchema = PotFormSchema.omit({ potName: true, theme: true });
 
 export const TransactionFormSchema = z.object({
+  transactionAvatar: z.any().refine(file => {
+    // Allow that field to be optional
+    if(!file || !(file instanceof File) || file.size === 0) return true;
+
+    // Validate that the file is an image
+    return ['image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
+  }, {
+    message: 'Please upload a valid image file (PNG, JPEG, JPG).',
+  }),
   transactionName: z.string({
     required_error: "Transaction name is required",
     invalid_type_error: "Transaction name can't be a number",
