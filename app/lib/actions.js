@@ -7,6 +7,8 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { getUser } from "./data";
 import { BudgetFormSchema, PotFormSchema, SignUpFormSchema, TransactionFormSchema, UpdateMoneyPotFormSchema } from "./utils";
+import { writeFile } from 'fs/promises';
+import path from 'path';
 
 export async function createUser(prevState, formData) {
   const validationData = SignUpFormSchema.safeParse({
@@ -154,6 +156,7 @@ export async function deletePot(id) {
 
 export async function createNewTransaction(prevState, formData) {
   const validationData = TransactionFormSchema.safeParse({
+    transactionAvatar: formData.get('transactionAvatar'),
     transactionName: formData.get('transactionName'),
     transactionDate: formData.get('transactionDate'),
     transactionAmount: formData.get('transactionAmount'),
@@ -168,6 +171,7 @@ export async function createNewTransaction(prevState, formData) {
   }
 
   const { 
+    transactionAvatar,
     transactionName, 
     transactionDate, 
     transactionAmount, 
@@ -176,15 +180,30 @@ export async function createNewTransaction(prevState, formData) {
   } = validationData.data;
 
   try {
-    //Fetch the category id
+
+    // Upload the avatar to the assets folder
+    if (transactionAvatar.size > 0) {
+      const filePath = path.join(process.cwd(), 'public', 'assets', transactionAvatar.name);
+      const buffer = await transactionAvatar.arrayBuffer();
+      const fileBuffer = Buffer.from(buffer);
+      writeFile(filePath, fileBuffer);
+    }
+
+    // Fetch the category id
     const categoryId = await sql`
       SELECT id FROM categories WHERE value = ${transactionCategory}
     `;
 
     const { user } = await auth();
 
+    // If transactionAvatar is not provided, use a default image
+    const avatarPath = transactionAvatar.size > 0 ? `./assets/${transactionAvatar.name}` : './assets/previewImage.png';
+
+    // Determine if the transaction is recurring
+    const recurring = !transactionRecurring ? false : true;
+
     await sql`
-      INSERT INTO transactions (avatar, name, date, amount, recurring, category_id, user_id) VALUES ('./assets/Logo-1.jpg', ${transactionName}, ${transactionDate}, ${parseInt(transactionAmount)}, ${!transactionRecurring ? false : true}, ${categoryId.rows[0].id}, ${user.id})
+      INSERT INTO transactions (avatar, name, date, amount, recurring, category_id, user_id) VALUES (${avatarPath}, ${transactionName}, ${transactionDate}, ${parseInt(transactionAmount)}, ${recurring}, ${categoryId.rows[0].id}, ${user.id})
     `;
   } catch (error) {
     console.error('Database Error:', error);
